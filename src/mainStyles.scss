@@ -1,0 +1,12 @@
+@use "_reset.scss";
+@use "./Components/Header/Header.module";
+
+#root{
+    width: 100vw;
+}
+
+.App{
+    width: calc(100% - 15%);
+    margin: 0 auto;   
+}
+

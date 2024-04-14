@@ -1,0 +1,42 @@
+.Header{
+	height: 70px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+ 
+	.TitleBlock{
+			display: flex;
+			span{
+					margin-left: 4px;
+			}
+			img{
+					width: 16px;
+					height: auto;
+			}
+	}
+
+	.AvatarBlock{
+			display: inline-flex;
+			align-items: center;
+			span{
+					width: -moz-fit-content;
+					width: fit-content;
+					margin-left: 8px;
+					margin-right: 4px;
+			}
+			img:nth-child(1){
+					width: 22px;
+					height: auto;
+			} 
+			img:nth-child(3){
+					width: 18px;
+					height: auto;
+			}
+	}
+
+	.Span{
+			color: white;
+			font-size: 0.91rem;
+			width: 5.375rem;
+	}
+}
