@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "Anonymous";
+    src: url("../../../fonts/Anonymous_Pro.ttf")
+}
+
+.SimulatorStrBlock {
+  width: -moz-fit-content;
+  width: fit-content;
+  position: relative;
+  margin-left: 30px;
+  font-family: "Anonymous";
+ 
+  .placeholder{
+    color: rgba(255, 255, 255, 0.2);
+    width: 47.19rem;
+    font-size: 1.0625rem;
+    letter-spacing: 0.02rem;
+  }
+}
