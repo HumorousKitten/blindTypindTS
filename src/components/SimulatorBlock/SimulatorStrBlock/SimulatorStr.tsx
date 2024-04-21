@@ -63,7 +63,6 @@ export const SimulatorStr = () => {
 
 	function equals(key: string, code: string, index: string) {
 		const element: HTMLElement | null = document.getElementById(index)
-
 		if (!element) {
 			return
 		}
