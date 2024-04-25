@@ -1,0 +1,19 @@
+.KeyBoardBlock{
+    width: 820px;
+    display: flex;
+    flex-wrap: wrap;
+    color: #FFFFFF;
+    font-weight: 400;
+    margin-top: 5px;
+    gap: 7px;
+    div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    div:nth-child(54){
+        position: relative;
+        left: 21%;
+    }
+}
