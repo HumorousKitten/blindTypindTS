@@ -1,5 +1,6 @@
 import React from 'react'
 import cl from './_SimulatorStr.module.scss'
+import { ICorrectnessCodeKey } from '../../../types/types'
 
 enum IgnoredKeys {
 	Backspace = 'Backspace',
@@ -21,12 +22,19 @@ enum IgnoredKeys {
 	Escape = 'Escape',
 }
 
-export const SimulatorStr = () => {
+
+interface ISimulatorStrProps {
+	setTheCorrectnessCodeKey: ({correct, codeKey}: ICorrectnessCodeKey) => void
+}
+
+export const SimulatorStr = ({setTheCorrectnessCodeKey}: ISimulatorStrProps) => {
 	const [simulatorStr, setSimulatorStr] = React.useState<string>(
 		'sdfkjbskdfkladhbashkbfasfbhsalfasf'
 	)
 	const simulatorText = React.useRef<HTMLParagraphElement>(null)
 	const index = React.useRef<number>(0)
+
+
 
 	React.useEffect(() => {
 		if (simulatorStr.length === 0) {
@@ -69,6 +77,7 @@ export const SimulatorStr = () => {
 
 		if (key !== simulatorStr[+index]) {
 			element.style.color = 'red'
+			setTheCorrectnessCodeKey({correct: false, codeKey: code})
 			return
 		}
 

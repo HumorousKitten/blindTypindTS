@@ -1,5 +1,6 @@
-import { KeyCodes } from '../../../types/types'
-import { KeyBlock } from './KeyBlock/KeyBlock'
+import React from 'react'
+import { KeyCodes, ICorrectnessCodeKey} from '../../../types/types'
+import { OptimizeKeyBlock } from './KeyBlock/KeyBlock'
 import { styles } from './KeyStyles'
 import cl from './_KeyBoard.module.scss'
 
@@ -29,11 +30,16 @@ const specialKeyCaps: readonly string[] = [
 	'Backslash',
 ]
 
-interface ILetters {
-	letters: string[]
+
+
+interface IAttributesOfKeyBlocksProps {
+	letters: readonly string[]
+	correctnessCodeKey: ICorrectnessCodeKey
 }
 
-export const AttributesOfKeyBlocks = ({ letters }: ILetters) => {
+
+export const AttributesOfKeyBlocks = ({ letters,  correctnessCodeKey}: IAttributesOfKeyBlocksProps) => {
+	
 	function isLiteralType(
 		keyCodesArray: readonly string[],
 		value: string
@@ -51,54 +57,59 @@ export const AttributesOfKeyBlocks = ({ letters }: ILetters) => {
 			{letters.map(item => {
 				if (isLiteralType(specialCharacters, item)) {
 					return (
-						<KeyBlock
+						<OptimizeKeyBlock
 							key={item}
 							styles={styles.identical}
 							elem={item}
 							id={getKeyCode(item)}
+							correctnessCodeKey={correctnessCodeKey}
 						/>
 					)
 				}
 
 				if (isLiteralType(specialKeyCaps, item)) {
 					return (
-						<KeyBlock
+						<OptimizeKeyBlock
 							key={item}
 							styles={styles[item as keyof typeof styles]}
 							elem={getKeyCode(item)}
 							id={item}
+							correctnessCodeKey={correctnessCodeKey}
 						/>
 					)
 				}
 
 				if (item === 'F' || item === 'J') {
 					return (
-						<KeyBlock
+						<OptimizeKeyBlock
 							key={item}
 							styles={styles.identical}
 							elem={item}
 							id={'Key' + item}
 							helpfulRecess={styles.HelpfulRecess}
+							correctnessCodeKey={correctnessCodeKey}
 						/>
 					)
 				}
 				if (!isNaN(+item)) {
 					return (
-						<KeyBlock
+						<OptimizeKeyBlock
 							key={item}
 							styles={styles.identical}
 							elem={item}
 							id={'digit' + item}
+							correctnessCodeKey={correctnessCodeKey}
 						/>
 					)
 				}
 
 				return (
-					<KeyBlock
+					<OptimizeKeyBlock
 						key={item}
 						styles={styles.identical}
 						elem={item}
 						id={'Key' + item}
+						correctnessCodeKey={correctnessCodeKey}
 					/>
 				)
 			})}
