@@ -2,6 +2,8 @@ import { FC } from 'react'
 import { IStylesOfKeyCaps, ICorrectnessCodeKey } from '../../../../types/types'
 import React from 'react'
 import style from './keyBlock.module.scss'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../../state/store'
 
 
 interface IKeyBlock {
@@ -9,7 +11,6 @@ interface IKeyBlock {
 	elem: string
 	helpfulRecess?: IStylesOfKeyCaps
   id: string
-  correctnessCodeKey: ICorrectnessCodeKey
 }
 
 const KeyBlock: FC<IKeyBlock> = ({
@@ -17,15 +18,15 @@ const KeyBlock: FC<IKeyBlock> = ({
 	elem,
 	helpfulRecess,
   id,
-  correctnessCodeKey,
+
 }) => {
 
-  const {correct, codeKey} = correctnessCodeKey
-
+  // const {correct, codeKey} = correctnessCodeKey
+  const {correct, codeKey} = useSelector((state: RootState) => state.correctCodeKey)
 
   React.useEffect(() => {
     // (!correct && correct !== null) && wrongKeyPressing()
-    console.log(codeKey)
+    console.log(correct, codeKey)
   }, [correct, codeKey])
 
   function wrongKeyPressing() {

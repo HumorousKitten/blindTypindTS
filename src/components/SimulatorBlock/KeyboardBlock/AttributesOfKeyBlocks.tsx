@@ -34,11 +34,10 @@ const specialKeyCaps: readonly string[] = [
 
 interface IAttributesOfKeyBlocksProps {
 	letters: readonly string[]
-	correctnessCodeKey: ICorrectnessCodeKey
 }
 
 
-export const AttributesOfKeyBlocks = ({ letters,  correctnessCodeKey}: IAttributesOfKeyBlocksProps) => {
+export const AttributesOfKeyBlocks = ({letters}: IAttributesOfKeyBlocksProps) => {
 	
 	function isLiteralType(
 		keyCodesArray: readonly string[],
@@ -62,7 +61,6 @@ export const AttributesOfKeyBlocks = ({ letters,  correctnessCodeKey}: IAttribut
 							styles={styles.identical}
 							elem={item}
 							id={getKeyCode(item)}
-							correctnessCodeKey={correctnessCodeKey}
 						/>
 					)
 				}
@@ -74,7 +72,6 @@ export const AttributesOfKeyBlocks = ({ letters,  correctnessCodeKey}: IAttribut
 							styles={styles[item as keyof typeof styles]}
 							elem={getKeyCode(item)}
 							id={item}
-							correctnessCodeKey={correctnessCodeKey}
 						/>
 					)
 				}
@@ -87,7 +84,6 @@ export const AttributesOfKeyBlocks = ({ letters,  correctnessCodeKey}: IAttribut
 							elem={item}
 							id={'Key' + item}
 							helpfulRecess={styles.HelpfulRecess}
-							correctnessCodeKey={correctnessCodeKey}
 						/>
 					)
 				}
@@ -98,7 +94,6 @@ export const AttributesOfKeyBlocks = ({ letters,  correctnessCodeKey}: IAttribut
 							styles={styles.identical}
 							elem={item}
 							id={'digit' + item}
-							correctnessCodeKey={correctnessCodeKey}
 						/>
 					)
 				}
@@ -109,7 +104,6 @@ export const AttributesOfKeyBlocks = ({ letters,  correctnessCodeKey}: IAttribut
 						styles={styles.identical}
 						elem={item}
 						id={'Key' + item}
-						correctnessCodeKey={correctnessCodeKey}
 					/>
 				)
 			})}
