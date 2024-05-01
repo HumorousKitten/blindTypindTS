@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
+import correctCodeKeySlice from './correctCodeKey/correctCodeKeySlice'
 
 export const store = configureStore({
-	reducer: {}
+	reducer: {
+		correctCodeKey: correctCodeKeySlice,
+	}
 })
 
 export type RootState = ReturnType<typeof store.getState>

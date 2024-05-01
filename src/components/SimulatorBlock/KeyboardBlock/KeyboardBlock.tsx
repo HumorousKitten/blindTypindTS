@@ -2,11 +2,11 @@ import React from "react";
 import { AttributesOfKeyBlocks } from "./AttributesOfKeyBlocks";
 import { ICorrectnessCodeKey } from '../../../types/types';
 
-interface IKeyBoardBlockProps {
-  correctnessCodeKey: ICorrectnessCodeKey
-}
+// interface IKeyBoardBlockProps {
+//   correctnessCodeKey: ICorrectnessCodeKey
+// }
 
-export const KeyBoardBlock = ({correctnessCodeKey}: IKeyBoardBlockProps) => {
+export const KeyBoardBlock = () => {
     const lettersArr: readonly string[] = [
         "`","1","2","3","4","5","6","7","8","9","0","-","=","Backspace",
         "Tab","Q","W","E","R","T","Y","U","I","O","P","[","]","Backslash",
@@ -18,7 +18,7 @@ export const KeyBoardBlock = ({correctnessCodeKey}: IKeyBoardBlockProps) => {
 
   
     return (
-      <AttributesOfKeyBlocks letters={lettersArr} correctnessCodeKey={correctnessCodeKey} />
+      <AttributesOfKeyBlocks letters={lettersArr} />
     );
 }
  
