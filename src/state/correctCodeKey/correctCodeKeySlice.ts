@@ -3,11 +3,15 @@ import { createSlice } from '@reduxjs/toolkit'
 interface ICorrectCodeKeyState {
 	correct: boolean | null
 	codeKey: string
+	currentKey: string
+	nextKey: string
 }
 
 const initialState: ICorrectCodeKeyState = {
 	correct: null,
-	codeKey: ''
+	codeKey: '',
+	currentKey: '',
+	nextKey: '',
 }
 
 const correctCodeKeySlice = createSlice({
@@ -17,6 +21,8 @@ const correctCodeKeySlice = createSlice({
 		isCorrectCodeKey: (state, {payload}) => {
 			state.correct = payload.correct
 			state.codeKey = payload.codeKey
+			state.currentKey = payload.currentKey
+			state.nextKey = payload.nextKey
 		}
 	}
 })

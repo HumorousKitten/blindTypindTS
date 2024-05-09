@@ -17,3 +17,16 @@
         left: 21%;
     }
 }
+
+.wrongKeyCode {
+	animation: borderRed .5s linear;
+}
+@keyframes borderRed {
+	0% {
+		border: 2px solid red;
+	}
+
+	100% {
+		border: none;
+	}
+}

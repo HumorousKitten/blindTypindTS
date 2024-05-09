@@ -1,8 +1,7 @@
 import React from 'react'
-import cl from './_SimulatorStr.module.scss'
-import { ICorrectnessCodeKey } from '../../../types/types'
 import { useDispatch } from 'react-redux'
 import { isCorrectCodeKey } from '../../../state/correctCodeKey/correctCodeKeySlice'
+import cl from './_SimulatorStr.module.scss'
 
 enum IgnoredKeys {
 	Backspace = 'Backspace',
@@ -24,20 +23,14 @@ enum IgnoredKeys {
 	Escape = 'Escape',
 }
 
-
-// interface ISimulatorStrProps {
-// 	setTheCorrectnessCodeKey: ({correct, codeKey}: ICorrectnessCodeKey) => void
-// }
-
 export const SimulatorStr = () => {
 	const [simulatorStr, setSimulatorStr] = React.useState<string>(
 		'sdfkjbskdfkladhbashkbfasfbhsalfasf'
 	)
 	const simulatorText = React.useRef<HTMLParagraphElement>(null)
 	const index = React.useRef<number>(0)
-	
-	const dispatch = useDispatch()
 
+	const dispatch = useDispatch()
 
 	React.useEffect(() => {
 		if (simulatorStr.length === 0) {
@@ -45,6 +38,14 @@ export const SimulatorStr = () => {
 		}
 
 		window.addEventListener('keydown', keyPressing)
+		dispatch(
+			isCorrectCodeKey({
+				correct: null,
+				codeKey: '',
+				currentKey: '',
+				nextKey: simulatorStr.charAt(0),
+			})
+		)
 
 		return () => {
 			window.removeEventListener('keydown', keyPressing)
@@ -74,17 +75,33 @@ export const SimulatorStr = () => {
 
 	function equals(key: string, code: string, index: string) {
 		const element: HTMLElement | null = document.getElementById(index)
+
 		if (!element) {
 			return
 		}
 
 		if (key !== simulatorStr[+index]) {
 			element.style.color = 'red'
-			dispatch(isCorrectCodeKey({correct: false, codeKey: code}))
+			dispatch(
+				isCorrectCodeKey({
+					correct: false,
+					codeKey: code,
+					currentKey: simulatorStr.charAt(+index),
+					nextKey: simulatorStr.charAt(+index + 1),
+				})
+			)
 			return
 		}
 
 		element.style.color = 'white'
+		dispatch(
+			isCorrectCodeKey({
+				correct: true,
+				codeKey: code,
+				currentKey: simulatorStr.charAt(+index),
+				nextKey: simulatorStr.charAt(+index + 1),
+			})
+		)
 	}
 
 	function backSpace(): void {
