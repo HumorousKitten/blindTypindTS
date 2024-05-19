@@ -1,0 +1,13 @@
+.LevelsBlock{
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 90px auto;
+    color: #FFFFFF;
+    div:first-child{
+        display: flex;
+        justify-content: center;   
+    }
+    .titleBLlock{
+        margin-bottom: 20px;
+    }
+}

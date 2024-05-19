@@ -5,6 +5,8 @@ interface ICorrectCodeKeyState {
 	codeKey: string
 	currentKey: string
 	nextKey: string
+	letterPosition: number
+	forSimilarKeyTaps?: number
 }
 
 const initialState: ICorrectCodeKeyState = {
@@ -12,6 +14,7 @@ const initialState: ICorrectCodeKeyState = {
 	codeKey: '',
 	currentKey: '',
 	nextKey: '',
+	letterPosition: 0
 }
 
 const correctCodeKeySlice = createSlice({
@@ -23,6 +26,8 @@ const correctCodeKeySlice = createSlice({
 			state.codeKey = payload.codeKey
 			state.currentKey = payload.currentKey
 			state.nextKey = payload.nextKey
+			state.letterPosition = payload.letterPosition
+			state.forSimilarKeyTaps = payload.forSimilarKeyTaps
 		}
 	}
 })

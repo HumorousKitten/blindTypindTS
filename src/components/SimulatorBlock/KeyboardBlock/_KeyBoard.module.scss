@@ -19,7 +19,7 @@
 }
 
 .wrongKeyCode {
-	animation: borderRed .5s linear;
+	animation: borderRed .4s linear;
 }
 @keyframes borderRed {
 	0% {
@@ -28,5 +28,18 @@
 
 	100% {
 		border: none;
+	}
+}
+
+.keyCapPress {
+	animation: backgroundBlack .3s linear;
+}
+@keyframes backgroundBlack {
+	0% {
+		background: black;
+	}
+
+	100% {
+		background: #1B1B1B;
 	}
 }
