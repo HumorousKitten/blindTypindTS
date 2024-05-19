@@ -103,16 +103,19 @@ export const AttributesOfKeyBlocks = ({
 		necessaryKeyPressing(currentKey)
 	}
 
+	function hasKeyByValue(enumObject: typeof specialCharacters, valueToFind: string): boolean {
+    return!!Object.keys(enumObject).find(key => enumObject[key as keyof typeof enumObject] === valueToFind);
+}
 	function translateKeyIntoKeyCode(key: string): string {
 		if (key === ' ') return 'Space'
 
 		if (!isNaN(+key)) return 'Digit' + key
 
-		if (key in specialCharacters) {
-			return Object.keys(specialCharacters).find(
+		if (hasKeyByValue(specialCharacters, key)) {
+			return (Object.keys(specialCharacters).find(
 				keyCode =>
 					specialCharacters[keyCode as keyof typeof specialCharacters] === key
-			) as string
+			) as string)
 		}
 
 		return 'Key' + key.toUpperCase()
