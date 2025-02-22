@@ -18,7 +18,7 @@ class Server {
       .join('&');
     const result = await fetch(`http://localhost:8888/backBT/?${query}`);
     const answer = await result?.json();
-    return answer.result === 'ok' ? answer.data : null;
+    return answer.result === 'ok' ? answer.data : answer.result;
   }
 
   // async postSend(params = {}) {

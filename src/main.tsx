@@ -6,7 +6,8 @@ import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import './mainStyles.scss';
 import { SimulatorPage } from './pages/SimulatorPage/SimulatorPage'
 import { LevelsPage } from './pages/LevelsPage/LevelsPage';
-
+import { Registration } from './pages/Registration/Registration';
+import { AuthorizationPage } from './pages/autorization/AutorizationPage';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,16 @@ const router = createBrowserRouter([
   {
     path: '/levels',
     element: <LevelsPage />
+  },
+
+  {
+    path: '/registration',
+    element: <Registration />
+  },
+
+  {
+    path: '/authorization',
+    element: <AuthorizationPage />
   },
 ])
 

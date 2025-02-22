@@ -1,0 +1,32 @@
+.dataBlock {
+	margin: auto;
+	position: relative;
+	top: 200px;
+	height: 400px;
+	z-index: 1;
+
+	h2 {
+		color: white;
+		font-weight: 700;
+		font-size: 1.48rem;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+
+	form {
+		display: flex;
+        margin: auto;
+		width: -moz-fit-content;
+		width: fit-content;
+		flex-direction: column;
+	}
+
+	div {
+		text-align: center;
+		span {
+			color: rgba(255, 255, 255, 0.3);
+			font-size: 0.75rem;
+			margin-right: 3px;
+		}
+	}
+}
