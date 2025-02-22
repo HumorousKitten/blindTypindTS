@@ -1,22 +1,14 @@
 import React from "react";
 import { SimulatorStr } from "./SimulatorStrBlock/SimulatorStr";
 import { KeyBoardBlock } from './KeyboardBlock/KeyboardBlock';
-//import { ICorrectnessCodeKey } from '../../types/types';
-
+import { LevelBlock } from './LevelsBlock/LevelBlock';
 import cl from "./_SimulatorBlock.module.scss";
 
 
 export const SimulatorBlock = () => {
-  // const [correctnessCodeKey, setTheCorrectnessCodeKey] = React.useState<ICorrectnessCodeKey>({
-  //   correct: null,
-  //   codeKey: ''
-  // })
-
-  
-
-
   return (
     <div className={cl.MainContainer}>
+      <LevelBlock />
       <SimulatorStr />
       <KeyBoardBlock />
     </div>

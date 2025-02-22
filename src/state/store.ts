@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
 import correctCodeKeySlice from './correctCodeKey/correctCodeKeySlice'
+import simulatorStrAndLevelSlice from './simulatorStrAndLevel/simulatorStrAndLevelSlice'
 
 export const store = configureStore({
 	reducer: {
 		correctCodeKey: correctCodeKeySlice,
+		simulatorStrAndLevel: simulatorStrAndLevelSlice
 	}
 })
 

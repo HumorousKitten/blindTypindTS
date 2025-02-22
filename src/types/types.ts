@@ -1,3 +1,5 @@
+
+
 type correctness = boolean | null
 
 export interface ICorrectnessCodeKey {
@@ -37,3 +39,11 @@ export enum KeyCodes {
  'Backslash' = '\\'
 }
 
+type TRegistration = 'Регистрация' | 'Добро пожаловать!'
+export interface IUIInfo {
+	title: TRegistration
+	textfield: string
+	isAccount: string
+	signUp?: string
+	logInHere?: string
+}
