@@ -1,0 +1,14 @@
+@use '../../scssVariables' as *;
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+.button {
+	border-radius: toRem(11);
+	background-color: $button-background;
+	color: $main-color;
+	padding: toRem(11) toRem(116);
+}
+
+.wrongAuth {
+	background-color: $wrongAuth-background;
+}
+

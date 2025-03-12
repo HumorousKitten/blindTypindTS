@@ -1,0 +1,11 @@
+@use '../../utils/ScssUtils/toRem.scss' as *;
+@use '../../scssVariables' as *;
+
+.input {
+	width: 100%;
+	border-radius: toRem(11);
+	background-color: $input-background;
+	padding: toRem(11) toRem(15);
+	font-size: toRem($inputType-size);
+	color: $placeholder-color;
+}
