@@ -9,3 +9,11 @@
 	font-size: toRem($inputType-size);
 	color: $placeholder-color;
 }
+
+.borderError {
+	border: 1px solid red;
+}
+
+.defaultBorder {
+	border: none;
+}

@@ -1,8 +1,14 @@
 import { FC } from 'react'
-import { Control, Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useLocation } from 'react-router-dom'
+import { IFormInputs, InputNamesEnum } from '../../types/types'
 import Button from '../../UI/button/Button'
-import { Input } from '../../UI/input/Input'
+import {
+	emailPattern,
+	maxLength,
+	minLength,
+} from '../../utils/formValidate/validate'
+import { ControlledInput } from '../controlledInput/ControlledInput'
 import cl from './_form.module.scss'
 
 interface IFormProps {
@@ -11,69 +17,18 @@ interface IFormProps {
 		password: string,
 		login?: string
 	) => Promise<void>
+	response: string | boolean
 }
 
-interface IFormInputs {
-	login: string
-	email: string
-	password: string
-}
-
-enum InputNamesEnum {
-	login = 'login',
-	email = 'email',
-	password = 'password',
-}
-
-type TLengthInputValue = {
-	value: number
-	message: string
-}
-
-type TPatternInput = {
-	value: RegExp
-	message: string
-}
-
-interface IRules {
-	required: boolean
-	min?: number
-	max?: number
-	minLength?: TLengthInputValue
-	maxLength?: TLengthInputValue
-	pattern?: TPatternInput
-	// validate: ??? какая-то функция для проверки валидации
-}
-
-interface IControlledInputProps {
-	control: Control<IFormInputs>
-	name: InputNamesEnum
-	type: 'number' | 'text' | 'email' | 'password'
-	placeholder: string
-	regulations?: IRules
-}
-
-const ControlledInput: FC<IControlledInputProps> = ({
-	name,
-	control,
-	type,
-	placeholder,
-	regulations,
-}) => {
-	return (
-		<Controller
-			name={name}
-			control={control}
-			render={({ field }) => (
-				<Input field={field} type={type} placeholder={placeholder} />
-			)}
-			rules={regulations}
-		/>
-	)
-}
-
-export const Form: FC<IFormProps> = ({ sendToServer }) => {
+export const Form: FC<IFormProps> = ({ sendToServer, response }) => {
 	const location = useLocation().pathname.slice(1)
+	const isAuthPage = location === 'auth'
+	const hasAuthError = isAuthPage && response === false
+	const buttonText = isAuthPage
+		? hasAuthError
+			? 'Неверный логин или пароль'
+			: 'Войти'
+		: 'Зарегистрироваться'
 
 	const {
 		handleSubmit,
@@ -85,18 +40,24 @@ export const Form: FC<IFormProps> = ({ sendToServer }) => {
 			email: '',
 			password: '',
 		},
+		mode: 'onBlur',
 	})
 
 	const onSubmit: SubmitHandler<IFormInputs> = data => {
-		console.log(data)
+		const { login, email, password } = data
+		if (!Object.keys(errors).length) {
+			if (!login) {
+				sendToServer(email, password)
+				return
+			}
+			sendToServer(login, email, password)
+			return
+		}
 	}
 
-	const onErrors = (errors: any) => {
-		console.log(errors)
-	}
-
+	// посмотреть рендеры после нажатия на кнопку
 	return (
-		<form onSubmit={handleSubmit(onSubmit, onErrors)}>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<div>
 				{location !== 'auth' ? (
 					<ControlledInput
@@ -106,15 +67,14 @@ export const Form: FC<IFormProps> = ({ sendToServer }) => {
 						placeholder='Login'
 						regulations={{
 							required: true,
-							minLength: {
-								value: 6,
-								message: 'Логин должен быть не менее 6 символов',
-							},
-							maxLength: {
-								value: 20,
-								message: 'Логин должен быть не более 20 символов',
-							},
+							minLength: minLength(6, 'Логин должен быть не менее 6 символов'),
+							maxLength: maxLength(
+								20,
+								'Логин должен быть не более 20 символов'
+							),
 						}}
+						error={errors.login ? true : false}
+						errorMessage={errors.login ? errors.login.message : ''}
 					/>
 				) : null}
 				<ControlledInput
@@ -124,11 +84,10 @@ export const Form: FC<IFormProps> = ({ sendToServer }) => {
 					placeholder='E-mail'
 					regulations={{
 						required: true,
-						pattern: { 
-              value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
-              message: 'Некорректный e-mail'
-            }
+						pattern: emailPattern,
 					}}
+					error={errors.email ? true : false}
+					errorMessage={errors.email ? errors.email.message : ''}
 				/>
 				<ControlledInput
 					name={InputNamesEnum.password}
@@ -137,18 +96,20 @@ export const Form: FC<IFormProps> = ({ sendToServer }) => {
 					placeholder='Password'
 					regulations={{
 						required: true,
-						minLength: {
-							value: 3,
-							message: 'Пароль должен быть не менее 3 символов',
-						},
-						maxLength: {
-							value: 18,
-							message: 'Пароль должен быть не более 18 символов',
-						},
+						minLength: minLength(3, 'Пароль должен быть не менее 3-х символов'),
+						maxLength: maxLength(18, 'Пароль должен быть не более 18 символов'),
 					}}
+					error={errors.password ? true : false}
+					errorMessage={errors.password ? errors.password.message : ''}
 				/>
 			</div>
-			<Button>{location === 'auth' ? 'Войти' : 'Регистрация'}</Button>
+			<Button
+				additionalClasses={{
+					wrongAuth: hasAuthError,
+				}}
+			>
+				{buttonText}
+			</Button>
 			{location === 'auth' ? (
 				<p className={cl.isAccount}>
 					Еще нет аккаунта?

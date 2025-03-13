@@ -7,11 +7,24 @@ form {
 	justify-content: center;
 	width: toRem(281);
 	flex-direction: column;
+	
+	div > label {
+		display: inline-flex;
+		width: 100%;
+		flex-direction: column;
+	}
+
+	div > label > span {
+		font-size: toRem($errorMessage-size);
+		color: $errorMessage-color;
+	}
+
+	div > label + label {
+		margin-top: toRem(9);
+	}
 }
 
-form input + input {
-	margin-top: toRem(9);
-}
+
 
 form button {
 	margin-top: toRem(9);

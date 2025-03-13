@@ -20,7 +20,7 @@ const Button: FC<IButton> = ({
 	return (
 		<button
 			type={type}
-			className={`${cl.button} ${additionalClasses?.wrongAuth}`}
+			className={`${cl.button} ${additionalClasses?.wrongAuth ? cl.wrongAuth : ''}`}
 		>
 			{children}
 		</button>

@@ -5,7 +5,9 @@
 	border-radius: toRem(11);
 	background-color: $button-background;
 	color: $main-color;
-	padding: toRem(11) toRem(116);
+	padding: toRem(11) toRem(26);
+	font-weight: 700;
+
 }
 
 .wrongAuth {
