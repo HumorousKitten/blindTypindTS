@@ -1,0 +1,46 @@
+@use '../../utils/ScssUtils/toRem.scss' as *;
+@use '../../scssVariables' as *;
+
+form {
+	display: flex;
+	margin: auto;
+	justify-content: center;
+	width: toRem(281);
+	flex-direction: column;
+	
+	div > label {
+		display: inline-flex;
+		width: 100%;
+		flex-direction: column;
+	}
+
+	div > label > span {
+		font-size: toRem($errorMessage-size);
+		color: $errorMessage-color;
+	}
+
+	div > label + label {
+		margin-top: toRem(9);
+	}
+}
+
+
+
+form button {
+	margin-top: toRem(9);
+}
+
+.isAccount {
+	color: $placeholder-color;
+	font-size: toRem($isAccount-size);
+	display: flex;
+	justify-content: center;
+	margin-top: toRem(9);
+
+	a {
+		color: $action-color;
+		text-decoration: underline;
+		text-decoration-skip-ink: none;
+		margin-left: 5px;
+	}
+}

@@ -36,7 +36,7 @@ class Server {
   //   });
   // }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string): Promise<string | boolean> {
     const data = await this.send({ method: 'login', email, password });
     if (data) {
       document.cookie = `token=${data.token}; path=/; max-age=3600`;
@@ -76,16 +76,16 @@ class Server {
     return await this.send({ method: 'getUserLevels', token });
   }
 
-  readCookie(name: string) {
-    var matches = document.cookie.match(
-      new RegExp(
-        '(?:^|; )' +
-          name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
-          '=([^;]*)'
-      )
-    );
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-  }
+  // readCookie(name: string) {
+  //   var matches = document.cookie.match(
+  //     new RegExp(
+  //       '(?:^|; )' +
+  //         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
+  //         '=([^;]*)'
+  //     )
+  //   );
+  //   return matches ? decodeURIComponent(matches[1]) : undefined;
+  // }
 
 }
 

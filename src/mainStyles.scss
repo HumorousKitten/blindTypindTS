@@ -1,8 +1,13 @@
 @use "_reset.scss";
 @use "./Components/Header/Header.module";
+@use "./scssVariables" as *;
 
 #root{
     width: 100vw;
+}
+
+body {
+    background: $main-background;
 }
 
 .App{
