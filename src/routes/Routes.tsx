@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import IsAuth from '../components/isAuth/IsAuth'
 import ProtectedRoutes from '../components/protectedRoutes/ProtectectedRoutes'
 import { AuthorizationPage } from '../pages/autorization/AutorizationPage'
-
+import { RegisterPage } from '../pages/Registration/RegistrationPage'
 
 export const router = createBrowserRouter([
 	{
@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
 
 			{
 				path: '/register',
-				element: <h1>dfdf</h1>
+				element: <RegisterPage />
 			}
 		]
 	},

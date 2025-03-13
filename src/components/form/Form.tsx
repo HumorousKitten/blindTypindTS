@@ -12,12 +12,9 @@ import { ControlledInput } from '../controlledInput/ControlledInput'
 import cl from './_form.module.scss'
 
 interface IFormProps {
-	sendToServer: (
-		email: string,
-		password: string,
-		login?: string
-	) => Promise<void>
-	response: string | boolean
+	sendToServer: ((email: string, password: string) => Promise<void>) | 
+	((email: string, password: string, login: string) => Promise<void>);
+	response: string | boolean | null
 }
 
 export const Form: FC<IFormProps> = ({ sendToServer, response }) => {

@@ -44,7 +44,7 @@ class Server {
     return data;
   }
 
-  async registration(login: string, password: string, email: string) {
+  async registration(login: string, password: string, email: string):Promise<boolean> {
     return await this.send({ method: 'registration', login, password, email });
   }
 
