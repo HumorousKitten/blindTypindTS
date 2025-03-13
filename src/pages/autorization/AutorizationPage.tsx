@@ -9,6 +9,7 @@ export const AuthorizationPage = () => {
 
 	async function authUser(email: string, password: string) {
 		const data = await server.login(email, password)
+		console.log(data)
 		setResponse(data)
 	}
 
