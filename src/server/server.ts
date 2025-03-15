@@ -16,7 +16,7 @@ class Server {
     const query = Object.keys(params)
       .map((key) => `${key}=${params[key]}`)
       .join('&');
-    const result = await fetch(`http://localhost:8888/backBT/?${query}`);
+    const result = await fetch(`http://blindtypingserver/?${query}`);
     const answer = await result?.json();
     return answer.result === 'ok' ? answer.data : answer.result;
   }
@@ -38,9 +38,9 @@ class Server {
 
   async login(email: string, password: string): Promise<string | boolean> {
     const data = await this.send({ method: 'login', email, password });
-    if (data) {
-      document.cookie = `token=${data.token}; path=/; max-age=3600`;
-    }
+    // if (data) {
+    //   document.cookie = `token=${data.token}; path=/; max-age=3600`;
+    // }
     return data;
   }
 
