@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useLocation } from 'react-router-dom'
 import { IFormInputs, InputNamesEnum } from '../../types/types'
@@ -10,17 +10,29 @@ import {
 } from '../../utils/formValidate/validate'
 import { ControlledInput } from '../controlledInput/ControlledInput'
 import cl from './_form.module.scss'
+import { server } from '../../server/server'
+import React from 'react'
+import { isPending } from '@reduxjs/toolkit'
 
-interface IFormProps {
-	sendToServer: ((email: string, password: string) => Promise<void>) | 
-	((email: string, password: string, login: string) => Promise<void>);
-	response: string | boolean | null
-}
-
-export const Form: FC<IFormProps> = ({ sendToServer, response }) => {
+export const Form = () => {
 	const location = useLocation().pathname.slice(1)
+	const [isSuccess, setIsSuccess] = React.useState<boolean | null>(null) 
+
+	const mutation = useMutation<string | boolean, Error, IFormInputs>({
+		mutationFn: async ({login, email, password}: IFormInputs) => 
+			location === 'auth' ? server.login(email, password) : server.registration(login, password, email),
+		onSuccess: (data) => {
+			console.log('Ответ сервера: ', data)
+			setIsSuccess(true)
+		},
+		onError: () => {
+			setIsSuccess(false)
+		}
+		
+	})
+	// console.log(mutation.isPending)
 	const isAuthPage = location === 'auth'
-	const hasAuthError = isAuthPage && response === false
+	const hasAuthError = isAuthPage && isSuccess === false
 	const buttonText = isAuthPage
 		? hasAuthError
 			? 'Неверный логин или пароль'
@@ -39,16 +51,11 @@ export const Form: FC<IFormProps> = ({ sendToServer, response }) => {
 		},
 		mode: 'onBlur',
 	})
-
+	
 	const onSubmit: SubmitHandler<IFormInputs> = data => {
-		const { login, email, password } = data
-		if (!Object.keys(errors).length) {
-			if (!login) {
-				sendToServer(email, password)
-				return
-			}
-			sendToServer(login, email, password)
-			return
+		if (!Object.keys(errors).length){
+			mutation.mutate(data)
+			console.log(mutation.data)
 		}
 	}
 
@@ -117,6 +124,7 @@ export const Form: FC<IFormProps> = ({ sendToServer, response }) => {
 					Уже есть аккаунт? <Link to='/auth'>Войдите здесь</Link>
 				</p>
 			)}
+
 		</form>
 	)
 }
