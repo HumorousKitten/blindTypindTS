@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { IFormInputs, InputNamesEnum } from '../../types/types'
 import Button from '../../UI/button/Button'
 import {
@@ -12,10 +12,10 @@ import { ControlledInput } from '../controlledInput/ControlledInput'
 import cl from './_form.module.scss'
 import { server } from '../../server/server'
 import React from 'react'
-import { isPending } from '@reduxjs/toolkit'
 
 export const Form = () => {
 	const location = useLocation().pathname.slice(1)
+	const navigate = useNavigate()
 	const [isSuccess, setIsSuccess] = React.useState<boolean | null>(null) 
 
 	const mutation = useMutation<string | boolean, Error, IFormInputs>({
@@ -23,21 +23,25 @@ export const Form = () => {
 			location === 'auth' ? server.login(email, password) : server.registration(login, password, email),
 		onSuccess: (data) => {
 			console.log('Ответ сервера: ', data)
-			setIsSuccess(true)
+			data ? setIsSuccess(true) : setIsSuccess(false)
+			
+			if(location === 'register' && data)
+				setTimeout(() => navigate('/auth'), 500)
+			if(location === 'auth' && data)
+				navigate('/')
 		},
-		onError: () => {
-			setIsSuccess(false)
-		}
-		
 	})
-	// console.log(mutation.isPending)
+
 	const isAuthPage = location === 'auth'
+	const isRegisterPage = location === 'register'
+	const defaultRegister = isRegisterPage && isSuccess === null
+	const successRegister = isRegisterPage && isSuccess
 	const hasAuthError = isAuthPage && isSuccess === false
 	const buttonText = isAuthPage
 		? hasAuthError
 			? 'Неверный логин или пароль'
 			: 'Войти'
-		: 'Зарегистрироваться'
+		: defaultRegister ? 'Регистрация' : successRegister ? 'Успешно..' : 'Пользователь уже существует' 
 
 	const {
 		handleSubmit,
@@ -109,8 +113,9 @@ export const Form = () => {
 			</div>
 			<Button
 				additionalClasses={{
-					wrongAuth: hasAuthError,
+					wrongAuth: isSuccess === false 
 				}}
+				isLoading = {mutation.isPending}
 			>
 				{buttonText}
 			</Button>
@@ -124,7 +129,6 @@ export const Form = () => {
 					Уже есть аккаунт? <Link to='/auth'>Войдите здесь</Link>
 				</p>
 			)}
-
 		</form>
 	)
 }
