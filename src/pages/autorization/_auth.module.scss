@@ -6,10 +6,17 @@
 	padding-top: toRem(313);
 	margin: auto;
 	@include containerWidth;
-	// border: 3px solid red;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+
+	.authContent {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		max-width: 550px;
+		margin: auto;
+	}
 
 	h2 {
 		color: white;
