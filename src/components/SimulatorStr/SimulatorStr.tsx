@@ -1,5 +1,6 @@
 import React from 'react'
 import { useImmer } from 'use-immer'
+import { useStore } from '../../state/store'
 import cl from './_SimulatorStr.module.scss'
 
 
@@ -36,7 +37,8 @@ interface ISpanArr {
 export const SimulatorStr = () => {
 	const simulatorStr = 'dffffffffffffffffffffdsfsdfsdfsdfsdfsdfsdfsdfsdfhdjkhsdjkfhasdkfhaskdjfhaskjdlfhsadkjlfhasdjkfhsajkdfhsadkjlfhsadkjfhasdkjfhasdkjfhasdkjfhsadfkjhsdafkjhsdafkj'
 
-	const [dividedSpanStr, updateDividedSpanStr] = useImmer<ISpanArr[]>([]) // искать по индексу введеную букву и красить, потом перерендерить
+	const {updateRequiredLetter, updateRightLetter, updateWrongLetter, clearLetter} = useStore()
+	const [dividedSpanStr, updateDividedSpanStr] = useImmer<ISpanArr[]>([]) 
 
 	const simulatorText = React.useRef<HTMLParagraphElement>(null)
 	const index = React.useRef<number>(0)
@@ -45,6 +47,7 @@ export const SimulatorStr = () => {
 		if (simulatorStr.length === 0) {
 			return
 		}
+		updateRequiredLetter(simulatorStr.charAt(0))
 		updateDividedSpanStr(addSpan())
 		window.addEventListener('keydown', keyPressing)
 		
@@ -67,15 +70,19 @@ export const SimulatorStr = () => {
 		if(index.current === simulatorStr.length) return
 
 		if(e.key === 'Backspace'){
+			clearLetter(simulatorStr.charAt(index.current))
 			backSpace()
 			return
 		}
 
-		if(e.key === simulatorStr.charAt(index.current))
+		if(e.key === simulatorStr.charAt(index.current)){
+			updateRightLetter(simulatorStr.charAt(index.current++), simulatorStr.charAt(index.current))
 			rightLetter(index.current)
-		else 
+		}
+		else{
+			updateWrongLetter(simulatorStr.charAt(index.current++), simulatorStr.charAt(index.current)) 
 			wrongLetter(index.current)
-		
+		}
 		index.current++
 	}
 
