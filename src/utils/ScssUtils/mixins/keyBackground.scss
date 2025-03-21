@@ -1,0 +1,6 @@
+@use '../../../scssVariables' as *;
+
+@mixin Background {
+	border-radius: 6.67px;
+	background: $keyBlock-background;
+}

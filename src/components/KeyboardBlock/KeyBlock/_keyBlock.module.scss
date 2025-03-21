@@ -1,0 +1,51 @@
+@use '../../../utils/ScssUtils/mixins/keyBackground.scss' as *;
+
+.keyBlock {
+	@include Background;
+	
+}
+
+.standartKey {
+	width: 49.38px;
+	height: 49.38px;
+}
+
+.Backspace {
+	width: 82px;
+	height: 49.38px;
+} 
+
+.Tab { 
+	width: 80.08px;
+	height: 49.38px;
+}
+
+.CapsLock {
+	width: 96.09px;
+	height: 49.38px;
+}
+
+.Enter {
+	width: 92px;
+	height: 49.38px;
+}
+
+.ShiftLeft {
+	width:125px;
+	height: 49.38px;
+}	
+
+.ShiftRight { 
+	width: 119px;
+	height: 49.38px;
+}
+
+.Space {
+	width: 438px;
+	height: 56px;
+}
+
+.Backslash {
+	width: 52.05px;
+	height: 49.38px;
+}

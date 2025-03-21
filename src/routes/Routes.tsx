@@ -3,6 +3,8 @@ import IsAuth from '../components/isAuth/IsAuth'
 import ProtectedRoutes from '../components/protectedRoutes/ProtectectedRoutes'
 import { AuthorizationPage } from '../pages/autorization/AutorizationPage'
 import { RegisterPage } from '../pages/Registration/RegistrationPage'
+import { SimulatorPage } from '../pages/SimulatorPage/SimulatorPage'
+
 
 export const router = createBrowserRouter([
 	{
@@ -25,28 +27,8 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <h1>main</h1>
+				element: <SimulatorPage />
 			}
 		]
 	}
-
-	// {
-	// 	path: '/',
-	// 	element: <SimulatorPage />
-	// },
-
-	// {
-	// 	path: '/levels',
-	// 	element: <LevelsPage />
-	// },
-
-	// {
-	// 	path: '/registration',
-	// 	element: <Registration />
-	// },
-
-	// {
-	// 	path: '/authorization',
-	// 	element: <AuthorizationPage />
-	// },
 ])
