@@ -78,11 +78,11 @@ export const SimulatorStr = () => {
 		}
 
 		if(e.key === simulatorStr.charAt(index.current)){
-			updateRightLetter(simulatorStr.charAt(letterPos++), simulatorStr.charAt(index.current))
+			updateRightLetter(simulatorStr.charAt(++letterPos), simulatorStr.charAt(index.current))
 			rightLetter(index.current)
 		}
 		else{
-			updateWrongLetter(simulatorStr.charAt(letterPos++), simulatorStr.charAt(index.current)) 
+			updateWrongLetter(simulatorStr.charAt(++letterPos), simulatorStr.charAt(index.current)) 
 			wrongLetter(index.current)
 		}
 		index.current++
@@ -90,7 +90,7 @@ export const SimulatorStr = () => {
 
 	function rightLetter(index: number) {
 		updateDividedSpanStr(draft => {
-			draft[index].isRight = true
+			draft[index].isRight = true 
 		})
 	}
 

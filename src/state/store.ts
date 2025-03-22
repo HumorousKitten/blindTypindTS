@@ -36,11 +36,13 @@ export const useStore = create<IStore>()(immer((set) => ({
 	updateWrongLetter: (requiredLetter, wrongLetter) => set(state => {
 		state.simulatorInputInfo.requiredLetter = requiredLetter
 		state.simulatorInputInfo.wrongLetter = wrongLetter
+		state.simulatorInputInfo.rightLetter = ''
 	}),
 
 	updateRightLetter: (requiredLetter, rightLetter) => set(state => {
 		state.simulatorInputInfo.requiredLetter = requiredLetter
 		state.simulatorInputInfo.rightLetter = rightLetter
+		state.simulatorInputInfo.wrongLetter = ''
 	})
 	
 })))
