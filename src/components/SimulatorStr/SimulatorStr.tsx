@@ -78,11 +78,11 @@ export const SimulatorStr = () => {
 		}
 
 		if(e.key === simulatorStr.charAt(index.current)){
-			updateRightLetter(simulatorStr.charAt(++letterPos), simulatorStr.charAt(index.current))
+			updateRightLetter(simulatorStr.charAt(++letterPos), e.key)
 			rightLetter(index.current)
 		}
 		else{
-			updateWrongLetter(simulatorStr.charAt(++letterPos), simulatorStr.charAt(index.current)) 
+			updateWrongLetter(simulatorStr.charAt(++letterPos), e.key) 
 			wrongLetter(index.current)
 		}
 		index.current++

@@ -2,7 +2,7 @@ import React from "react";
 // import { AttributesOfKeyBlocks } from "./AttributesOfKeyBlocks";
 // import { ICorrectnessCodeKey } from '../../../types/types';
 import { useStore } from '../../state/store';
-import { MemoizedKeyBlock as KeyBlock } from './KeyBlock/KeyBlock';
+import {KeyBlock} from './KeyBlock/KeyBlock';
 import cl from './_KeyBoard.module.scss'
 
 
@@ -22,7 +22,7 @@ export const KeyBoardBlock = () => {
     return (
       <div className={cl.KeyBoardBlock}>
         {lettersArr.map((item, index) => {
-          return <KeyBlock key={index}>{item}</KeyBlock> 
+          return <KeyBlock key={index} requiredLetter = {requiredLetter} wrongLetter = {wrongLetter} rightLetter = {rightLetter}>{item}</KeyBlock> 
         })}
       </div>
     );
