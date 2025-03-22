@@ -69,6 +69,8 @@ export const SimulatorStr = () => {
 	function keyPressing(e: KeyboardEvent) {
 		if(index.current === simulatorStr.length) return
 
+		let letterPos = index.current
+		
 		if(e.key === 'Backspace'){
 			clearLetter(simulatorStr.charAt(index.current))
 			backSpace()
@@ -76,11 +78,11 @@ export const SimulatorStr = () => {
 		}
 
 		if(e.key === simulatorStr.charAt(index.current)){
-			updateRightLetter(simulatorStr.charAt(index.current++), simulatorStr.charAt(index.current))
+			updateRightLetter(simulatorStr.charAt(letterPos++), simulatorStr.charAt(index.current))
 			rightLetter(index.current)
 		}
 		else{
-			updateWrongLetter(simulatorStr.charAt(index.current++), simulatorStr.charAt(index.current)) 
+			updateWrongLetter(simulatorStr.charAt(letterPos++), simulatorStr.charAt(index.current)) 
 			wrongLetter(index.current)
 		}
 		index.current++

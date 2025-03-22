@@ -1,7 +1,7 @@
 import React from "react";
 // import { AttributesOfKeyBlocks } from "./AttributesOfKeyBlocks";
 // import { ICorrectnessCodeKey } from '../../../types/types';
-
+import { useStore } from '../../state/store';
 import { MemoizedKeyBlock as KeyBlock } from './KeyBlock/KeyBlock';
 import cl from './_KeyBoard.module.scss'
 
@@ -16,7 +16,8 @@ export const KeyBoardBlock = () => {
         "Space"
 		];
 	
-
+    // const {requiredLetter, wrongLetter, rightLetter} = useStore(state => state.simulatorInputInfo)
+    // console.log(requiredLetter, wrongLetter, rightLetter)
   
     return (
       <div className={cl.KeyBoardBlock}>
