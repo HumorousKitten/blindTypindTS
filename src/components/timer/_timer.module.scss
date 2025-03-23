@@ -1,0 +1,21 @@
+@use '../../scssVariables' as *;
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+.timer {
+	background: $timer-background;
+	border-radius: toRem(36);
+	width: toRem(295);
+	height: toRem(146);
+	margin: auto;
+	position: relative;
+	z-index: -999;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	p {
+		color: #FFFFFF;
+		margin-top: auto;
+		margin-bottom: 10px;
+	}
+}
