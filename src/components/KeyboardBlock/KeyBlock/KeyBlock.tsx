@@ -10,7 +10,7 @@ interface IKeyBlockProps {
 
 export const KeyBlock: FC<IKeyBlockProps> = ({ children, requiredLetter, wrongLetter, rightLetter }) => {
 	const [isWrong, setIsWrong] = React.useState<boolean>(false)
-	console.log(wrongLetter)
+	// console.log(wrongLetter)
 	const keyNames: Record<string, string> = {
 		Backspace: '<-',
 		Tab: 'tab',

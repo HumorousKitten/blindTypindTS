@@ -35,9 +35,9 @@ interface ISpanArr {
 }
 
 export const SimulatorStr = () => {
-	const simulatorStr = 'dffffffffffffffffffffdsfsdfsdfsdfsdfsdfsdfsdfsdfhdjkhsdjkfhasdkfhaskdjfhaskjdlfhsadkjlfhasdjkfhsajkdfhsadkjlfhsadkjfhasdkjfhasdkjfhasdkjfhsadfkjhsdafkjhsdafkj'
+	const simulatorStr = 'dffffffffffffffffffff'
 
-	const {updateRequiredLetter, updateRightLetter, updateWrongLetter, clearLetter} = useStore()
+	const {updateRequiredLetter, updateRightLetter, updateWrongLetter, clearLetter, increaseProgressBar, decreaseProgressBar} = useStore()
 	const [dividedSpanStr, updateDividedSpanStr] = useImmer<ISpanArr[]>([]) 
 
 	const simulatorText = React.useRef<HTMLParagraphElement>(null)
@@ -72,13 +72,13 @@ export const SimulatorStr = () => {
 		let letterPos = index.current
 		
 		if(e.key === 'Backspace'){
-			clearLetter(simulatorStr.charAt(index.current))
 			backSpace()
 			return
 		}
 
 		if(e.key === simulatorStr.charAt(index.current)){
 			updateRightLetter(simulatorStr.charAt(++letterPos), e.key)
+			increaseProgressBar(simulatorStr.length)
 			rightLetter(index.current)
 		}
 		else{
@@ -102,6 +102,8 @@ export const SimulatorStr = () => {
 
 	function backSpace(){
 		if(!index.current) return
+		clearLetter(simulatorStr.charAt(index.current))
+		decreaseProgressBar(simulatorStr.length)
 
 		updateDividedSpanStr(draft => {
 			draft[index.current].isWrong = false

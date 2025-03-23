@@ -1,0 +1,1 @@
+export const progressionOneCorrectChar = (widthStr: number) => 100 / widthStr

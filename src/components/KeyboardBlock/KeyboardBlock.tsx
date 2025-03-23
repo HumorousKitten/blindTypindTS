@@ -17,7 +17,7 @@ export const KeyBoardBlock = () => {
 		];
 	
     const {requiredLetter, wrongLetter, rightLetter} = useStore(state => state.simulatorInputInfo)
-    console.log(requiredLetter, wrongLetter, rightLetter)
+    // console.log(requiredLetter, wrongLetter, rightLetter)
   
     return (
       <div className={cl.KeyBoardBlock}>
