@@ -3,10 +3,14 @@ import cl from './_keyBlock.module.scss'
 
 interface IKeyBlockProps {
 	children: string
+	requiredLetter: string
+	wrongLetter: string
+	rightLetter: string
 }
 
-const KeyBlock: FC<IKeyBlockProps> = ({ children }) => {
-
+export const KeyBlock: FC<IKeyBlockProps> = ({ children, requiredLetter, wrongLetter, rightLetter }) => {
+	const [isWrong, setIsWrong] = React.useState<boolean>(false)
+	// console.log(wrongLetter)
 	const keyNames: Record<string, string> = {
 		Backspace: '<-',
 		Tab: 'tab',
@@ -20,11 +24,30 @@ const KeyBlock: FC<IKeyBlockProps> = ({ children }) => {
 	
 	const keyName = keyNames[children] || children
 
+	React.useEffect(() => {
+		// console.log("Effect triggered:", { wrongLetter, keyName });
+		if(wrongLetter.toUpperCase() === keyName){
+			setIsWrong(true)
+
+			const timer = setTimeout(() => {
+				setIsWrong(false)
+			}, 900)
+
+			return () => clearTimeout(timer)
+		}
+	}, [wrongLetter, keyName])
+
 	return (
 		<div
-			className={`${cl.keyBlock} ${
-				cl[children] || cl.standartKey
-			}`}
+			className={`
+				${cl.keyBlock} 
+				${cl[children] || cl.standartKey}
+				${requiredLetter.toUpperCase() === keyName ? cl.requiredLetter : ''}
+				${isWrong ? cl.wrongLetter : ''}
+				`
+		
+		}
+
 		>
 			{keyName}
 			{/* <div style={helpfulRecess}></div> */}
@@ -32,4 +55,4 @@ const KeyBlock: FC<IKeyBlockProps> = ({ children }) => {
 	)
 }
 
-export const MemoizedKeyBlock = React.memo(KeyBlock)
+// export const MemoizedKeyBlock = React.memo(KeyBlock)

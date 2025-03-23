@@ -1,0 +1,27 @@
+@use '../../scssVariables' as *;
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+.mainBar {
+	background: $mainProgressBar-background;
+	border-radius: toRem(2);
+	width: toRem(235);
+	height: toRem(5);
+	position: relative;
+	margin-left: 30px;
+}
+
+.secondBar {
+	background: $secondProgressBar-background;
+	border-radius: inherit;
+	width: toRem(213);
+	height: inherit;
+}
+
+.thirdBar {
+	background: $thirdProgressBar-background;
+	border-radius: inherit;
+	height: inherit;
+	position: absolute;
+	top: 0;
+	left: 0;
+}

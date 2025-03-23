@@ -49,3 +49,37 @@
 	width: 52.05px;
 	height: 49.38px;
 }
+
+.requiredLetter {
+	border: 1.33px solid #454545;
+}
+
+.wrongLetter {
+	animation: mistakeLetter 0.8s;
+}
+
+@keyframes mistakeLetter {
+	0% {
+		border: none
+	}
+
+	25% {
+		border: 1.33px solid #FF3F3F;
+	}
+
+	50% {
+		border: 1.33px solid #FF3F3F;
+	}
+
+	75% {
+		border: 1.33px solid #FF3F3F;
+	}
+
+	100% {
+		border: none;
+	}
+}
+
+.pressedKey {
+	background-color: #070707;
+}
