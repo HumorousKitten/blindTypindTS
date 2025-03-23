@@ -37,7 +37,7 @@ interface ISpanArr {
 export const SimulatorStr = () => {
 	const simulatorStr = 'dffffffffffffffffffff'
 
-	const {updateRequiredLetter, updateRightLetter, updateWrongLetter, clearLetter, increaseProgressBar, decreaseProgressBar} = useStore()
+	const {updateRequiredLetter, updateRightLetter, updateWrongLetter, clearLetter, increaseProgressBar, decreaseProgressBar, updateTimer} = useStore()
 	const [dividedSpanStr, updateDividedSpanStr] = useImmer<ISpanArr[]>([]) 
 
 	const simulatorText = React.useRef<HTMLParagraphElement>(null)
@@ -69,6 +69,8 @@ export const SimulatorStr = () => {
 	function keyPressing(e: KeyboardEvent) {
 		if(index.current === simulatorStr.length) return
 
+		updateTimer(true)
+	
 		let letterPos = index.current
 		
 		if(e.key === 'Backspace'){
@@ -85,6 +87,11 @@ export const SimulatorStr = () => {
 			updateWrongLetter(simulatorStr.charAt(++letterPos), e.key) 
 			wrongLetter(index.current)
 		}
+
+		if(index.current + 1 === simulatorStr.length) {
+			updateTimer(false)
+		}
+
 		index.current++
 	}
 

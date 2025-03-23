@@ -7,7 +7,7 @@ export const AuthorizationPage = () => {
 	return (
 		<div className={cl.auth}>
 			<div className={cl.authContent}>
-				<RunningCat classNames={{position: 'absolute'}} widthPx={427} coordPosition={{right: -130, bottom: -70}}/>
+				<RunningCat classNames={{position: 'absolute'}} widthPx={427} coordPosition={{right: -130, bottom: -120}} isRunning={true} heightPx={411}/>
 				<h2>Добро пожаловать!</h2>
 				<AuthForm />			
 			</div>

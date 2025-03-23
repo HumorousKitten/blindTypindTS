@@ -29,10 +29,19 @@ interface IRunningCatProps {
 	widthPx?: number
 	widthPerc?: number
 	widthRem?: number
+	heightPx?: number
+	heightPerc?: number
+	heightRem?: number
+
+	isRunning: boolean
 }
 
 function formatWidth(width: number, unit: string = 'px') {
 	return width + unit
+}
+
+function formatHeight(height: number, unit: string = 'px') {
+	return height + unit
 }
 
 export const RunningCat: FC<IRunningCatProps> = ({
@@ -52,10 +61,13 @@ export const RunningCat: FC<IRunningCatProps> = ({
 		eighthPos,
 	]
 
-	const { widthPerc, widthPx, widthRem } = props
+	const { widthPerc, widthPx, widthRem, heightPx, heightPerc, heightRem } =
+		props
 
 	const positionClassName = classNames?.position
-		? 'position' + classNames.position.charAt(0).toUpperCase() + classNames.position.slice(1)
+		? 'position' +
+		  classNames.position.charAt(0).toUpperCase() +
+		  classNames.position.slice(1)
 		: ''
 
 	const styleCoordPos = {
@@ -73,20 +85,34 @@ export const RunningCat: FC<IRunningCatProps> = ({
 		? formatWidth(widthRem, 'rem')
 		: 'auto'
 
-	React.useEffect(() => {
-		const cancelAnimation = runningCat(arrImages, imgRef)
+	const height = heightPerc
+		? formatHeight(heightPerc, '%')
+		: heightPx
+		? formatHeight(heightPx)
+		: heightRem
+		? formatHeight(heightRem, 'rem')
+		: 'auto'
 
-		return () => {
-			cancelAnimation()
+	React.useEffect(() => {
+		if (props.isRunning) {
+			const cancelAnimation = runningCat(arrImages, imgRef)
+
+			return () => {
+				cancelAnimation()
+			}
 		}
-	}, [])
+	}, [props.isRunning])
 
 	return (
 		<div
 			className={`${positionClassName ? cl[positionClassName] : ''} ${
 				cl.runningCat
 			}`}
-			style={{ ...(coordPosition && styleCoordPos), width: width }}
+			style={{
+				...(coordPosition && styleCoordPos),
+				width: width,
+				height: height,
+			}}
 		>
 			<img src={firstPos} alt='runningCat' ref={imgRef} />
 		</div>

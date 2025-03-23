@@ -10,13 +10,16 @@ interface ISimulatorInputInfo {
 
 interface IStore {
 	simulatorInputInfo: ISimulatorInputInfo
-	progressBarWidth: number //нужно написать функцию, которая увеличивает прогресс бар на определенное значение, вызываться она будет в методе в сторе, а сам метод из стора вызываться в компоненте строки, когда была правильно введена буква
+	progressBarWidth: number 
+	isTime: boolean
+
 	clearLetter: (requiredLetter: string) => void
 	updateRequiredLetter: (requiredLetter: string) => void
 	updateWrongLetter: (requiredLetter: string, wrongLetter: string) => void
 	updateRightLetter: (requiredLetter: string, rightLetter: string) => void
 	increaseProgressBar: (widthStr: number) => void
 	decreaseProgressBar: (widthStr: number) => void
+	updateTimer: (isTime: boolean) => void
 }
 
 export const useStore = create<IStore>()(immer((set) => ({
@@ -25,8 +28,9 @@ export const useStore = create<IStore>()(immer((set) => ({
 		wrongLetter: '',
 		rightLetter: ''
 	},
-
 	progressBarWidth: 0,
+	isTime: false,
+
 
 	clearLetter: (requiredLetter) => set(state => {
 		state.simulatorInputInfo.requiredLetter = requiredLetter
@@ -56,6 +60,10 @@ export const useStore = create<IStore>()(immer((set) => ({
 
 	decreaseProgressBar: (widthStr) => set(state => {
 		state.progressBarWidth -= progressionOneCorrectChar(widthStr)
+	}),
+
+	updateTimer: (isTime) => set(state => {
+		state.isTime = isTime
 	})
 
 })))
