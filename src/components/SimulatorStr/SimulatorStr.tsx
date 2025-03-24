@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useImmer } from 'use-immer'
 import { useStore } from '../../state/store'
 import cl from './_SimulatorStr.module.scss'
@@ -34,7 +34,11 @@ interface ISpanArr {
 	isRight: boolean
 }
 
-export const SimulatorStr = () => {
+interface ISimulatorStrProps {
+	setIsEnd: (value: boolean) => void
+}
+
+export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd}) => {
 	const simulatorStr = 'dffffffffffffffffffff'
 
 	const {updateRequiredLetter, updateRightLetter, updateWrongLetter, clearLetter, increaseProgressBar, decreaseProgressBar, updateTimer} = useStore()
@@ -90,6 +94,7 @@ export const SimulatorStr = () => {
 
 		if(index.current + 1 === simulatorStr.length) {
 			updateTimer(false)
+			setIsEnd(true)
 		}
 
 		index.current++

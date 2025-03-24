@@ -7,7 +7,6 @@
 	width: toRem(235);
 	height: toRem(5);
 	position: relative;
-	margin-left: 30px;
 }
 
 .secondBar {
@@ -24,4 +23,12 @@
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+.ml {
+	margin-left: 30px;
+}
+
+.mc {
+	margin: auto;
 }
