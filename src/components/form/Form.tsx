@@ -80,6 +80,7 @@ export const Form = () => {
 			<Button
 				additionalClasses={{
 					wrongAuth: isSuccess === false,
+					background: 'blue'
 				}}
 				isLoading={mutation.isPending}
 			>
