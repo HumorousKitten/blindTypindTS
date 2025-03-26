@@ -4,7 +4,7 @@ import ProtectedRoutes from '../components/protectedRoutes/ProtectectedRoutes'
 import { AuthorizationPage } from '../pages/autorization/AutorizationPage'
 import { RegisterPage } from '../pages/Registration/RegistrationPage'
 import { SimulatorPage } from '../pages/SimulatorPage/SimulatorPage'
-
+import { LevelsPage } from '../pages/LevelsPage/LevelsPage'
 
 export const router = createBrowserRouter([
 	{
@@ -28,6 +28,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/',
 				element: <SimulatorPage />
+			},
+			{
+				path: '/levels',
+				element: <LevelsPage />
 			}
 		]
 	}

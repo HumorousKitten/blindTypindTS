@@ -1,111 +1,36 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { server } from '../../../server/server'
-import { addStrAndLevel } from '../../../state/simulatorStrAndLevel/simulatorStrAndLevelSlice'
+import { useStore } from '../../../state/store'
+
 import cl from './_LevellBlock.module.scss'
+import doubleIcon from '../../../assets/img/icons/double.svg'
 
-interface ICompletedSubLevels {
-	level?: string
-	sublevel?: string
-}
-
-interface ISubLevelsProps {
-	index: number
-	completeSubLevels: ICompletedSubLevels[]
-}
-
-const SubLevels = ({ index, completeSubLevels }: ISubLevelsProps) => {
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
-
-	React.useEffect(() => {
-		if (completeSubLevels.length !== 0) {
-			completeSubLevels.forEach(item => {
-				const element = document.getElementById(index + '.' + item.sublevel)
-				if (element) element.style.background = '#0066FF'
-			})
-		}
-	}, [completeSubLevels])
-
-  async function searchSubLevel(event: React.MouseEvent<HTMLDivElement>) {
-    const subLevelId = event.currentTarget.id.slice(
-			event.currentTarget.id.indexOf('.') + 1
-    )
-    const simulatorStr = await server.getLevel(index, +subLevelId)
-    dispatch(addStrAndLevel({ simulatorStr, level: index, sublevel:+subLevelId }))
-		navigate('/')
-	}
-	return (
-		<>
-			<div
-				style={{ borderRadius: '3px 0 0 3px', right: '0px' }}
-				id={index + '.' + 1}
-				onClick={searchSubLevel}
-			></div>
-			<div
-				className='subLevel'
-				id={index + '.' + 2}
-				onClick={searchSubLevel}
-			></div>
-			<div
-				style={{ borderRadius: '0 3px 3px 0', left: '53px' }}
-				id={index + '.' + 3}
-				onClick={searchSubLevel}
-			></div>
-		</>
-	)
-}
-
-type TLevelBlockStyle = {
-	marginBottom: string
-}
 
 interface ILevelBlock {
 	index: number
 	value: string
-	svg?: React.ReactElement
-	style?: TLevelBlockStyle
-	completedSubLevels?: ICompletedSubLevels[]
+	completedSubLevels: {
+		level: number
+		sublevel: number
+	}[]
 }
 
-const LevelBlock: FC<ILevelBlock> = ({
+export const LevelBlock: FC<ILevelBlock> = ({
 	index,
 	value,
-	svg,
-	style,
 	completedSubLevels,
 }) => {
-	const [completeSubLevels, setCompleteSubLevels] = React.useState<
-		ICompletedSubLevels[]
-	>([])
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
-
-	React.useEffect(() => {
-		if (index !== 0 && completedSubLevels?.length !== 0)
-			setCompleteSubLevels(searchCompletedSubLevel(index))
-	}, [completedSubLevels])
-
-	function searchCompletedSubLevel(level: number): ICompletedSubLevels[] {
-		if (completedSubLevels) {
-			const tmpArr = completedSubLevels.filter(item => {
-				if (item.level && +item.level === level) return item
-				return null
-			})
-			return tmpArr
-		}
-		return []
-	}
+	const updateSimulatorLevel = useStore(state => state.updateSimulatorLevel)
 
 	return (
 		<div
 			className={cl.lvlBlock}
-			style={style}
 			onClick={async () => {
 				if (index === 0) {
 					const simulatorStr = await server.getLevel(index, 1)
-					dispatch(addStrAndLevel({ simulatorStr, level: index }))
+					updateSimulatorLevel(simulatorStr, index, 0)
 					navigate('/')
 				}
 			}}
@@ -113,32 +38,64 @@ const LevelBlock: FC<ILevelBlock> = ({
 			<div className={cl.infoOfLevel}>
 				<span>{index}</span>
 				<span>{value}</span>
-				{svg}
+				{!index ? <img src={doubleIcon} alt="doubleIcon" /> : null}
 			</div>
 
-			<div className={cl.progressBlock}>
-				{index !== 0 && (
-					<SubLevels index={index} completeSubLevels={completeSubLevels} />
-				)}
-			</div>
+			{index !== 0 && (
+				<SubLevels index={index} completeSubLevels={completedSubLevels} />
+			)}
 		</div>
 	)
 }
 
-function memoizedLevelBlock(prevProps: ILevelBlock, nextProps: ILevelBlock) {
-	if (
-		nextProps.completedSubLevels &&
-		nextProps.completedSubLevels.length !== 0
-	) {
-		if (
-			nextProps.completedSubLevels.find(
-				obj => obj.level && +obj.level === nextProps.index
-			)
-		)
-			return false
-		return true
-	}
-	return false
+interface ISubLevels {
+	index: number
+	completeSubLevels: {
+		level: number
+		sublevel: number
+	}[]
 }
 
-export const MemoizedLevelBlock = React.memo(LevelBlock, memoizedLevelBlock)
+const SubLevels: FC<ISubLevels> = ({ index, completeSubLevels }) => {
+	const navigate = useNavigate()
+	const updateSimulatorLevel = useStore(state => state.updateSimulatorLevel)
+	const subLevels = React.useRef<HTMLDivElement>(null)
+
+	async function searchSubLevel(event: React.MouseEvent<HTMLDivElement>) {
+		const subLevelId = event.currentTarget.id.slice(
+			event.currentTarget.id.indexOf('.') + 1
+		)
+		const simulatorStr = await server.getLevel(index, +subLevelId)
+		updateSimulatorLevel(simulatorStr, index, +subLevelId)
+		navigate('/')
+	}
+	const completeSubLevelsLookup = React.useMemo(() => {
+		return completeSubLevels.reduce<Record<string, boolean>>((acc, item) => {
+			acc[`${item.level}.${item.sublevel}`] = true
+			return acc
+		}, {})
+	}, [completeSubLevels])
+
+	return (
+		<div className={cl.progressBlock}>
+			{[1, 2, 3].map(subLevelNumber => {
+				const key = `${index}.${subLevelNumber}`
+				const isComplete = completeSubLevelsLookup[key]
+				return (
+					<div
+						key={key}
+						id={key}
+						onClick={searchSubLevel}
+						className={`
+								${isComplete ? cl.completeSubLevel : cl.defaultSubLevelColor}
+								${subLevelNumber === 1 ? cl.borderRadiusLeft : ''}
+								${subLevelNumber === 3 ? cl.borderRadiusRight : ''}
+								${subLevelNumber === 1 ? cl.firstSubLevelPos : ''}
+								${subLevelNumber === 3 ? cl.thirdSubLevelPos : ''}
+							`}
+					></div>
+				)
+			})}
+		</div>
+	)
+}

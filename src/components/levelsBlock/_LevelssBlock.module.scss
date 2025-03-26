@@ -1,13 +1,18 @@
-.LevelsBlock{
-    width: -moz-fit-content;
-    width: fit-content;
-    margin: 90px auto;
-    color: #FFFFFF;
-    div:first-child{
+.LevelsBlock {
+    position: relative;
+	width: -moz-fit-content;
+	width: fit-content;
+	margin: 90px auto;
+	color: #ffffff;
+	.titleBlock {
         display: flex;
-        justify-content: center;   
-    }
-    .titleBLlock{
-        margin-bottom: 20px;
+		justify-content: center;
+		margin-bottom: 20px;
+        align-items: center;
+	}
+
+    .titleBlock > img{
+        position: absolute;
+        right: 0;
     }
 }

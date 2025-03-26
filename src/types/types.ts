@@ -1,22 +1,5 @@
 
 
-type correctness = boolean | null
-
-export interface ICorrectnessCodeKey {
-  correct: correctness
-  codeKey: string
-}
-
-
-export interface IStylesOfKeyCaps {
-	width: string
-	height: string,
-	borderRadius: string,
-	background: string,
-	position?: 'static' | 'absolute',
-	bottom?: string,
-  left?: string,
-}
 
 export enum KeyCodes {
 	'`' = "Backquote", // `
@@ -37,15 +20,6 @@ export enum KeyCodes {
  'ShiftRight' = 'shift',
  'Space' = '',
  'Backslash' = '\\'
-}
-
-type TRegistration = 'Регистрация' | 'Добро пожаловать!'
-export interface IUIInfo {
-	title: TRegistration
-	textfield: string
-	isAccount: string
-	signUp?: string
-	logInHere?: string
 }
 
 export interface IFormInputs {
