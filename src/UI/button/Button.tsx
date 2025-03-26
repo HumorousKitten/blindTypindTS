@@ -1,16 +1,18 @@
 import { FC, ReactNode } from 'react'
-import { Loader } from '../loader/Loader'
 import cl from './_button.module.scss'
 
 interface IAdditionClasses {
-	wrongAuth: boolean
+	wrongAuth?: boolean
+	display?: 'block'
+	background: 'blue' | 'transparent'
+	margin?: 'auto'
 }
 
 interface IButton {
 	children: ReactNode
 	type?: 'button' | 'reset' | 'submit'
 	additionalClasses?: IAdditionClasses
-	isLoading: boolean
+	isLoading?: boolean
 	// onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
@@ -18,14 +20,24 @@ const Button: FC<IButton> = ({
 	children,
 	type = 'submit',
 	additionalClasses,
-	isLoading
+	isLoading,
 }) => {
 	return (
 		<button
 			type={type}
-			className={`${cl.button} ${additionalClasses?.wrongAuth ? cl.wrongAuth : ''}`}
+			className={`
+					${cl.button} 
+					${additionalClasses?.wrongAuth ? cl.wrongAuth : ''}
+					${additionalClasses?.display ? cl.displayBlock : ''}
+					${
+						additionalClasses?.background === 'blue'
+							? cl.backgroundColorBlue
+							: cl.backgroundColorTransparent
+					}
+					${additionalClasses?.margin === 'auto' ? cl.mc : ''}
+				`}
 		>
-			{isLoading ?  'Loading...' : children}
+			{isLoading ? 'Loading...' : children}
 		</button>
 	)
 }

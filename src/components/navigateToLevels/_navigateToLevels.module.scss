@@ -1,0 +1,20 @@
+@use '../../scssVariables' as *;
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+.level {
+	color: rgba(255, 255, 255, 0.2);
+	font-size: toRem($navigateToLevels-size);
+}
+
+.navigateToLevels {
+	display: flex;
+	align-items: center;
+	text-decoration-line: none;
+	& .level + .level{
+		margin-left: toRem(4);	
+	}
+	& img{
+		margin-right: toRem(8);
+	}
+}
+
