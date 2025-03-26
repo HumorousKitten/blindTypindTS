@@ -1,18 +1,21 @@
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
 .LevelsBlock {
-    position: relative;
+	position: relative;
 	width: -moz-fit-content;
 	width: fit-content;
-	margin: 90px auto;
+	margin: toRem(70) auto;
 	color: #ffffff;
-	.titleBlock {
-        display: flex;
-		justify-content: center;
-		margin-bottom: 20px;
-        align-items: center;
-	}
 
-    .titleBlock > img{
-        position: absolute;
-        right: 0;
-    }
+	.titleBlock {
+		display: flex;
+		justify-content: center;
+		margin-bottom: toRem(20);
+		align-items: center;
+	}
+	.titleBlock > img {
+		position: absolute;
+		right: 0;
+		cursor: pointer;
+	}
 }
