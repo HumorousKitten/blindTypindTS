@@ -11,8 +11,8 @@ interface ISimulatorInputInfo {
 
 interface simulatorLevel {
 	simulatorStr: string 
-	level: number | null
-	subLevel: number | null
+	level: number
+	subLevel: number
 }
 
 interface IStore {
@@ -45,8 +45,8 @@ export const useStore = create<IStore>()(immer((set) => ({
 
 	simulatorLevel: {
 		simulatorStr: '',
-		level: null,
-		subLevel: null
+		level: 0,
+		subLevel: 0
 	},
 
 	getInitialLevel: async () => {
