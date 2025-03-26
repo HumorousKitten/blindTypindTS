@@ -48,7 +48,7 @@ class Server {
     return await this.send({ method: 'registration', login, password, email });
   }
 
-  async getLevel(level_id: number, sublevel: number) {
+  async getLevel(level_id: number, sublevel: number): Promise<string> {
     return await this.send({ method: 'getLevel', level_id, sublevel });
   }
 
@@ -72,7 +72,7 @@ class Server {
     return await this.send({ method: 'getBestResult', token });
   }
 
-  async getUserLevels(token: string){
+  async getUserLevels(token: string): Promise<{level: number, sublevel: number}[]>{
     return await this.send({ method: 'getUserLevels', token });
   }
 

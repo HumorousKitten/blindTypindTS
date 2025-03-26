@@ -39,9 +39,17 @@ interface ISimulatorStrProps {
 }
 
 export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd}) => {
-	const simulatorStr = 'dffffffffffffffffffff'
 
-	const {updateRequiredLetter, updateRightLetter, updateWrongLetter, clearLetter, increaseProgressBar, decreaseProgressBar, updateTimer} = useStore()
+	const updateRequiredLetter = useStore(state => state.updateRequiredLetter)
+	const updateRightLetter = useStore(state => state.updateRightLetter)
+	const updateWrongLetter = useStore(state => state.updateWrongLetter)
+	const clearLetter = useStore(state => state.clearLetter)
+	const increaseProgressBar = useStore(state => state.increaseProgressBar)
+	const decreaseProgressBar = useStore(state => state.decreaseProgressBar)
+	const updateTimer = useStore(state => state.updateTimer)
+	const getInitialLevel = useStore(state => state.getInitialLevel)
+	const {simulatorStr} = useStore(state => state.simulatorLevel)
+
 	const [dividedSpanStr, updateDividedSpanStr] = useImmer<ISpanArr[]>([]) 
 
 	const simulatorText = React.useRef<HTMLParagraphElement>(null)
@@ -49,8 +57,9 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd}) => {
 
 	React.useEffect(() => {
 		if (simulatorStr.length === 0) {
-			return
+			getInitialLevel()
 		}
+
 		updateRequiredLetter(simulatorStr.charAt(0))
 		updateDividedSpanStr(addSpan())
 		window.addEventListener('keydown', keyPressing)

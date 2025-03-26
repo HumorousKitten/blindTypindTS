@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { progressionOneCorrectChar } from '../utils/progressBar/progressionOneCorrectChar';
+import { server } from '../server/server'
 
 interface ISimulatorInputInfo {
 	requiredLetter: string
@@ -8,11 +9,19 @@ interface ISimulatorInputInfo {
 	rightLetter: string
 }
 
+interface simulatorLevel {
+	simulatorStr: string 
+	level: number | null
+	subLevel: number | null
+}
+
 interface IStore {
 	simulatorInputInfo: ISimulatorInputInfo
 	progressBarWidth: number 
 	isTime: boolean
+	simulatorLevel: simulatorLevel
 
+	getInitialLevel: () => void
 	clearLetter: (requiredLetter: string) => void
 	updateRequiredLetter: (requiredLetter: string) => void
 	updateWrongLetter: (requiredLetter: string, wrongLetter: string) => void
@@ -20,6 +29,7 @@ interface IStore {
 	increaseProgressBar: (widthStr: number) => void
 	decreaseProgressBar: (widthStr: number) => void
 	updateTimer: (isTime: boolean) => void
+	updateSimulatorLevel: (simulatorStr: string, level: number, subLevel: number) => void
 }
 
 export const useStore = create<IStore>()(immer((set) => ({
@@ -28,9 +38,23 @@ export const useStore = create<IStore>()(immer((set) => ({
 		wrongLetter: '',
 		rightLetter: ''
 	},
+
 	progressBarWidth: 0,
 	isTime: false,
+	
 
+	simulatorLevel: {
+		simulatorStr: '',
+		level: null,
+		subLevel: null
+	},
+
+	getInitialLevel: async () => {
+		const data = await server.getLevel(0, 1);
+		set((state) => {
+			state.simulatorLevel.simulatorStr = data
+		});
+	},
 
 	clearLetter: (requiredLetter) => set(state => {
 		state.simulatorInputInfo.requiredLetter = requiredLetter
@@ -64,6 +88,11 @@ export const useStore = create<IStore>()(immer((set) => ({
 
 	updateTimer: (isTime) => set(state => {
 		state.isTime = isTime
-	})
+	}), 
 
+	updateSimulatorLevel: (simulatorStr, level, subLevel) => set(state => {
+		state.simulatorLevel.simulatorStr = simulatorStr
+		state.simulatorLevel.level = level
+		state.simulatorLevel.subLevel = subLevel
+	})
 })))
