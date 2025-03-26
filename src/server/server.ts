@@ -64,8 +64,12 @@ class Server {
     });
   }
 
-  async getUserData(token: string) {
-    return await this.send({ method: 'getUserData', token });
+  async getUserLogin(token: string):Promise<{login: string}> {
+    return await this.send({ method: 'getUserLogin', token });
+  }
+
+  async getUserEmail(token: string):Promise<{email: string}> {
+    return await this.send({ method: 'getUserEmail', token });
   }
 
   async getBestResult(token: string){

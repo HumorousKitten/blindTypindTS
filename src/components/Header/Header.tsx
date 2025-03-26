@@ -1,18 +1,31 @@
 import { useNavigate } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { server } from '../../server/server';
 import avatarIcon from '../../assets/img/icons/avatar.svg'
 import documentIcon from '../../assets/img/icons/list.svg'
 import iconBlindTyping from '../../assets/img/icons/logo.svg'
 import cl from './Header.module.scss'
+import React from 'react'
 
-interface IProps {
 
-}
-
-export const Header: React.FC<IProps> = () => {
+export const Header = () => {
 	const navigate = useNavigate()
+	const {data, isLoading} = useQuery({
+		queryKey: ['userLogin'],
+		queryFn: getLogin
+	})
+
+	async function getLogin() {
+		const token = server.readCookie('token')
+		if(!token) return
+		const data = await server.getUserLogin(token)
+		return data 
+	}
+
 	function toMainPage(): void{
 		navigate("/")
 	}
+	
 	return (
 		<header className={cl.Header}>
 			<div className={cl.TitleBlock} onClick={toMainPage}>
@@ -22,7 +35,7 @@ export const Header: React.FC<IProps> = () => {
 
 			<div className={cl.AvatarBlock}>
 				<img src={avatarIcon} alt="avatarIcon" width={22} height={22}/>
-				<span className={cl.Span}></span>
+				<span className={cl.Span}>{isLoading ? 'Loading...' : data?.login}</span>
 				<img src={documentIcon} alt="documentIcon" width={18} height={18}/>
 			</div>
 		</header>
