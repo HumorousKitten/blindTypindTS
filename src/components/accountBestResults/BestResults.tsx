@@ -17,10 +17,6 @@ export const BestResults = () => {
 		queryFn: getUserBestResult,
 	})
 
-	React.useEffect(() => {
-		console.log(data)
-	}, [data])
-
 	return (
 		<section className={cl.bestResultSection}>
 			<p className={cl.bestResultLevel}>

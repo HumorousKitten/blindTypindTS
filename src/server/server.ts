@@ -91,6 +91,11 @@ class Server {
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
 
+  deleteCookie(name: string) {
+    if (this.readCookie(name)) {
+      document.cookie = name + "=; Max-Age=-1;";
+    }
+  }
 }
 
 export const server = new Server()
