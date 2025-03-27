@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import avatar from '../../assets/img/icons/avatar.svg'
 import relog from '../../assets/img/icons/rename.svg'
@@ -20,14 +21,17 @@ async function getUserData() {
 }
 
 export const AccountHeader = () => {
+	const navigate = useNavigate()
+
 	const { data, isLoading } = useQuery({
 		queryKey: ['useData'],
 		queryFn: getUserData,
 	})
 
-	React.useEffect(() => {
-		console.log(data)
-	}, [data])
+	function relogAccount(){
+		server.deleteCookie('token')
+		navigate('/auth')
+	}
 
 	return (
 		<header className={`${cl.accountHeader} ${cl.wrapper}`}>
@@ -35,7 +39,7 @@ export const AccountHeader = () => {
 			<div className={cl.userData}>
 				{isLoading ? 'Loading...' : data ? <p>{data[0].login}</p> : null}
 				{isLoading ? 'Loading...' : data ? <p>{data[1].email}</p> : null}
-				<img src={relog} alt='relogAccount' />
+				<img src={relog} alt='relogAccount' onClick = {relogAccount}/>
 			</div>
 			<Link to={'/'} className={cl.exit}>
 				<img src={exit} alt='exitToMainPage' />
