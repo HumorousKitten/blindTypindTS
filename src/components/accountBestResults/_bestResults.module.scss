@@ -1,0 +1,64 @@
+@use '../../utils/ScssUtils/toRem.scss' as *;
+@use '../../scssVariables' as *;
+
+.bestResultSection {
+	margin-top: toRem(43);
+
+	.bestResultLevel {
+		font-size: toRem(14);
+		color: #ffffff;
+
+		span {
+			color: rgba(255, 255, 255, 0.2);
+			margin-left: toRem(3);
+			line-height: 140%;
+		}
+	}
+
+	.bestResults {
+		display: flex;
+		color: $main-color;
+		align-items: center;
+		gap: 21px;
+
+		.charPerMinutes {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			span:first-child {
+				font-size: toRem($bestResults_number-size);
+			}
+
+			span:nth-child(2) {
+				font-size: toRem($finalResults_mainWords-size);
+			}
+		}
+
+		.wordPerMinutes {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			span:first-child {
+				font-size: toRem($bestResults_number-size);
+			}
+
+			span:nth-child(2) {
+				font-size: toRem($finalResults_mainWords-size);
+			}
+		}
+
+		.accuracy {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			span:first-child {
+				font-size: toRem($bestResults_number-size);
+				font-weight: 700;
+			}
+
+			span:nth-child(2) {
+				font-size: toRem($finalResults_wordsAccuracy-size);
+			}
+		}
+	}
+}
