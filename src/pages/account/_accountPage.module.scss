@@ -1,0 +1,13 @@
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+.account {
+	width: toRem(640);
+}
+
+.wrapper {
+	width: calc(100% - toRem(1280));
+}
+
+.mc {
+	margin: toRem(144) auto;
+}

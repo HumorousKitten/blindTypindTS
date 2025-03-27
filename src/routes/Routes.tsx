@@ -5,6 +5,7 @@ import { AuthorizationPage } from '../pages/autorization/AutorizationPage'
 import { RegisterPage } from '../pages/Registration/RegistrationPage'
 import { SimulatorPage } from '../pages/SimulatorPage/SimulatorPage'
 import { LevelsPage } from '../pages/LevelsPage/LevelsPage'
+import { Account } from '../pages/account/Account'
 
 export const router = createBrowserRouter([
 	{
@@ -32,7 +33,11 @@ export const router = createBrowserRouter([
 			{
 				path: '/levels',
 				element: <LevelsPage />
-			}
+			},
+			{
+				path: '/account',
+				element: <Account />
+			},
 		]
 	}
 ])

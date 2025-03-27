@@ -26,6 +26,10 @@ export const Header = () => {
 		navigate("/")
 	}
 	
+	function toAccountPage(): void {
+		navigate('/account')
+	}
+
 	return (
 		<header className={cl.Header}>
 			<div className={cl.TitleBlock} onClick={toMainPage}>
@@ -34,8 +38,8 @@ export const Header = () => {
 			</div>
 
 			<div className={cl.AvatarBlock}>
-				<img src={avatarIcon} alt="avatarIcon" width={22} height={22}/>
-				<span className={cl.Span}>{isLoading ? 'Loading...' : data?.login}</span>
+				<img src={avatarIcon} alt="avatarIcon" width={22} height={22} onClick={toAccountPage}/>
+				<span className={cl.Span} onClick={toAccountPage}>{isLoading ? 'Loading...' : data?.login}</span>
 				<img src={documentIcon} alt="documentIcon" width={18} height={18}/>
 			</div>
 		</header>

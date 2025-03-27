@@ -1,0 +1,42 @@
+@use '../../scssVariables' as *;
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+
+.accountHeader {
+	display: flex;
+	position: relative;
+	align-items: center;
+	.avatar {
+		width: 64px;
+	}
+
+	.userData {
+		color: $main-color;
+		margin-left: 20px;
+	}
+
+	.userData p:first-child {
+		font-weight: 700;
+		font-size: toRem(26);
+		line-height: 140%;
+	}
+
+	.userData p:last-child {
+		font-weight: 400;
+		font-size: toRem(14);
+	}
+
+	.userData img {
+		position: absolute;
+		top: 10px;
+		left: 260px;
+		cursor: pointer;
+	}
+
+
+	.exit {
+		margin-left: auto;
+		cursor: pointer;
+	}
+}
+
