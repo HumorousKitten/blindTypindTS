@@ -22,7 +22,6 @@ export const KeyBoardBlock: FC<IKeyboardBlockProps> = ({mistakes}) => {
     const {requiredLetter, wrongLetter, rightLetter} = useStore(state => state.simulatorInputInfo)
   
     const uniqueMistakes = [...new Set(mistakes)]
-    console.log(uniqueMistakes)
 
     return (
       <div className={cl.KeyBoardBlock}>

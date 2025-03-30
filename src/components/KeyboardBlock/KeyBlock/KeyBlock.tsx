@@ -24,9 +24,8 @@ export const KeyBlock: FC<IKeyBlockProps> = ({ children, requiredLetter, wrongLe
 	}
 	
 	const keyName = keyNames[children] || children
-	console.log(keyNames['Tab'])
+
 	React.useEffect(() => {
-		// console.log("Effect triggered:", { wrongLetter, keyName });
 		if(wrongLetter.toUpperCase() === keyName){
 			setIsWrong(true)
 

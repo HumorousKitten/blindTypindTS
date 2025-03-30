@@ -1,32 +1,11 @@
 import React, { FC } from 'react'
 import { useImmer } from 'use-immer'
 import { useStore } from '../../state/store'
+import { unwantedKeys} from './unwantedKeys'
 import cl from './_SimulatorStr.module.scss'
 
 
-// enum IgnoredKeys {
-// 	Backspace = 'Backspace',
-// 	Alt = 'Alt',
-// 	ControlLeft = 'Control',
-// 	ControlRight = 'Control',
-// 	ShiftLeft = 'Shift',
-// 	ShiftRight = 'Shift',
-// 	Tab = 'Tab',
-// 	Enter = 'Enter',
-// 	CapsLock = 'CapsLock',
-// 	Home = 'Home',
-// 	Delete = 'Delete',
-// 	PageUp = 'PageUp',
-// 	ArrowUp = 'ArrowUp',
-// 	ArrowDown = 'ArrowDown',
-// 	ArrowLeft = 'ArrowLeft',
-// 	ArrowRight = 'ArrowRight',
-// 	PageDown = 'PageDown',
-// 	MetaLeft = 'Meta',
-// 	MetaRight = 'Meta',
-// 	Escape = 'Escape',
-// 	IntlBackslash = '§±',
-// }
+
 
 interface ISpanArr {
 	letter: string
@@ -57,7 +36,6 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes}) =>
 	const index = React.useRef<number>(0)
 	const mistakes: string[] = []
 
-
 	React.useEffect(() => {
 		if (simulatorStr.length === 0) {
 			getInitialLevel()
@@ -84,6 +62,8 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes}) =>
 
 	function keyPressing(e: KeyboardEvent) {
 		if(index.current === simulatorStr.length) return
+
+		if(e.key in unwantedKeys) return
 
 		updateTimer(true)
 	
