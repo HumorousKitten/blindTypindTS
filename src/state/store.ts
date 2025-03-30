@@ -29,8 +29,10 @@ interface IStore {
 	updateRightLetter: (requiredLetter: string, rightLetter: string) => void
 	increaseProgressBar: (widthStr: number) => void
 	decreaseProgressBar: (widthStr: number) => void
+	clearProgressBar: () => void
 	updateTimer: (isTime: boolean) => void
 	updateSimulatorLevel: (simulatorStr: string, level: number, subLevel: number) => void
+	updateSimulatorStr: (simulatorStr: string) => void
 	updateEndTime: (endTime: string) => void
 }
 
@@ -90,6 +92,10 @@ export const useStore = create<IStore>()(immer((set) => ({
 		state.progressBarWidth -= progressionOneCorrectChar(widthStr)
 	}),
 
+	clearProgressBar: () => set(state => {
+		state.progressBarWidth = 0
+	}),
+
 	updateTimer: (isTime) => set(state => {
 		state.isTime = isTime
 	}), 
@@ -98,6 +104,10 @@ export const useStore = create<IStore>()(immer((set) => ({
 		state.simulatorLevel.simulatorStr = simulatorStr
 		state.simulatorLevel.level = level
 		state.simulatorLevel.subLevel = subLevel
+	}),
+
+	updateSimulatorStr: (simulatorStr) => set(state => {
+		state.simulatorLevel.simulatorStr = simulatorStr
 	}),
 
 	updateEndTime: (endTime) => set(state => {

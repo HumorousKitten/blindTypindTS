@@ -18,12 +18,17 @@ export const Timer = () => {
 
 	React.useEffect(() => {
 		termRef.current = term
-		// console.log(termRef)
 	}, [term])
 
 	React.useEffect(() => {
 		if (isRunning) {
 			clearTimer.current = timer(getTime).clearTimer
+		}
+
+		if(!isRunning){
+			if(clearTimer.current)
+				clearTimer.current()
+			setTerm('00:00')
 		}
 
 		return () => {
