@@ -7,7 +7,7 @@ import next from '../../assets/img/icons/next_buttom.svg'
 import { server } from '../../server/server'
 import { useStore } from '../../state/store'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import cl from './_usefulIcons.module.scss'
 
 interface IUsefulIcons {
@@ -32,47 +32,35 @@ export const UsefulIcons: FC<IUsefulIcons> = ({ setMistakes }) => {
 	const updateSimulatorLvl = useStore(state => state.updateSimulatorLevel)
 	const updateTimer = useStore(state => state.updateTimer)
 	const clearProgressBar = useStore(state => state.clearProgressBar)
-
-	const [changeLevel, updateLevel] = useImmer<IChangeLevel>({
-		level: 0,
-		sublevel: 1,
+	const {level, subLevel} = useStore(state => state.simulatorLevel)
+	const changeLevel = React.useRef<IChangeLevel>({
+		level: level,
+		sublevel: subLevel,
 	})
+	console.log(changeLevel)
 
-	const { data, refetch } = useQuery({
-		queryKey: ['levelData', changeLevel.level, changeLevel.sublevel],
-		queryFn: () => getSimulatorLevel(changeLevel.level, changeLevel.sublevel),
-		enabled: false,
+	const mutation = useMutation({
+		mutationFn: async ({ level, sublevel }: IChangeLevel) => server.getLevel(level, sublevel),
+		onSuccess: data => {
+			updateSimulatorLvl(data, changeLevel.current.level, changeLevel.current.sublevel)	
+		},
 	})
-
-	React.useEffect(() => {
-		refetch()
-	}, [changeLevel.level, changeLevel.sublevel, refetch])
-
-	React.useEffect(() => {
-		if (data) updateSimulatorLvl(data, changeLevel.level, changeLevel.sublevel)
-	}, [data])
 
 	function nextLevel() {
-		if(!changeLevel.level) {
-			updateLevel(draft => {
-				draft.level++
-			})
-		}
-		else if (changeLevel.level === maxLevel && changeLevel.sublevel === 3) {
-			updateLevel(draft => {
-				draft.level = 0
-				draft.sublevel = 1
-			})
-		} else if (changeLevel.sublevel === 3) {
-			updateLevel(draft => {
-				draft.sublevel = 0
-				draft.level++
-			})
+		if (!changeLevel.current.level) {
+			++changeLevel.current.level
+		} else if (changeLevel.current.level === maxLevel && changeLevel.current.sublevel === 3) {
+			changeLevel.current.level = 0
+			changeLevel.current.sublevel = 1
+		} else if (changeLevel.current.sublevel === 3) {
+			++changeLevel.current.level
+			changeLevel.current.sublevel = 1
 		} else {
-			updateLevel(draft => {
-				draft.sublevel++
-			})
+			++changeLevel.current.sublevel
 		}
+
+		const {level, sublevel} = changeLevel.current
+		mutation.mutate({level, sublevel})
 	}
 
 	function clear() {

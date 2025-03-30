@@ -53,7 +53,7 @@ export const useStore = create<IStore>()(immer((set) => ({
 	simulatorLevel: {
 		simulatorStr: '',
 		level: 0,
-		subLevel: 0
+		subLevel: 1
 	},
 
 	endTime: '',
