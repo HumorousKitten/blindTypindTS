@@ -16,6 +16,7 @@ interface simulatorLevel {
 }
 
 interface IStore {
+	maxLevel: number
 	simulatorInputInfo: ISimulatorInputInfo
 	progressBarWidth: number 
 	isTime: boolean | null
@@ -37,6 +38,8 @@ interface IStore {
 }
 
 export const useStore = create<IStore>()(immer((set) => ({
+	maxLevel: 8,
+
 	simulatorInputInfo: {
 		requiredLetter: '',
 		wrongLetter: '',
