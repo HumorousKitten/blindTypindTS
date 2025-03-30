@@ -18,8 +18,9 @@ interface simulatorLevel {
 interface IStore {
 	simulatorInputInfo: ISimulatorInputInfo
 	progressBarWidth: number 
-	isTime: boolean
+	isTime: boolean | null
 	simulatorLevel: simulatorLevel
+	endTime: string
 
 	getInitialLevel: () => void
 	clearLetter: (requiredLetter: string) => void
@@ -30,6 +31,7 @@ interface IStore {
 	decreaseProgressBar: (widthStr: number) => void
 	updateTimer: (isTime: boolean) => void
 	updateSimulatorLevel: (simulatorStr: string, level: number, subLevel: number) => void
+	updateEndTime: (endTime: string) => void
 }
 
 export const useStore = create<IStore>()(immer((set) => ({
@@ -40,7 +42,7 @@ export const useStore = create<IStore>()(immer((set) => ({
 	},
 
 	progressBarWidth: 0,
-	isTime: false,
+	isTime: null,
 	
 
 	simulatorLevel: {
@@ -48,6 +50,8 @@ export const useStore = create<IStore>()(immer((set) => ({
 		level: 0,
 		subLevel: 0
 	},
+
+	endTime: '',
 
 	getInitialLevel: async () => {
 		const data = await server.getLevel(0, 1);
@@ -94,5 +98,9 @@ export const useStore = create<IStore>()(immer((set) => ({
 		state.simulatorLevel.simulatorStr = simulatorStr
 		state.simulatorLevel.level = level
 		state.simulatorLevel.subLevel = subLevel
+	}),
+
+	updateEndTime: (endTime) => set(state => {
+		state.endTime = endTime
 	})
 })))

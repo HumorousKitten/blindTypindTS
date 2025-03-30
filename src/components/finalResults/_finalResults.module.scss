@@ -15,6 +15,7 @@
 	align-items: center;
 	span:first-child {
 		font-size: toRem($finalResults_mainNumbers-size);
+		font-weight: 700;
 	}
 
 	span:nth-child(2){
@@ -28,6 +29,7 @@
 	align-items: center;
 	span:first-child {
 		font-size: toRem($finalResults_mainNumbers-size);
+		font-weight: 700;
 	}
 
 	span:nth-child(2){
@@ -41,9 +43,14 @@
 	position: relative;
 	top: -15px;
 	align-items: center;
+	border: 1px solid red;
+	width: toRem(150);
 	span:first-child{
 		font-size: toRem($finalResults_numberAccuracy-size);
 		font-weight: 700;
+		span {
+			margin-left: toRem(15);
+		}
 	}
 
 	span:nth-child(2) {

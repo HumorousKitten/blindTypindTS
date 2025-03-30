@@ -11,20 +11,22 @@ import cl from './_SimulatorBlock.module.scss'
 export const SimulatorBlock = () => {
   const [isEndLevel, setIsEndLevel] = React.useState<boolean>(false) 
 
+	const [mistakes, setMistakes] = React.useState<string[]>([])
+
 	return (
 		<div className={cl.MainContainer}>
 			{isEndLevel ? (
-				<FinalResults />
+				<FinalResults countOfMistakes = {mistakes.length}/>
 			) : (
 				<>
 					<Timer />
 					<NavigateToLevels />
-					<SimulatorStr setIsEnd = {setIsEndLevel}/>
+					<SimulatorStr setIsEnd = {setIsEndLevel} setMistakes = {setMistakes}/>
 				</>
 			)}
-			<ProgressBar mc={isEndLevel ? 'mc' : undefined} />
+			<ProgressBar mc={isEndLevel ? 'mc' : undefined} endLevel = {isEndLevel ? true : false}/>
 			{isEndLevel ? <NavigateToLevels mc='mc'/> : null}
-			<KeyBoardBlock />
+			<KeyBoardBlock mistakes = {isEndLevel ? mistakes : []}/>
 		</div>
 	)
 }
