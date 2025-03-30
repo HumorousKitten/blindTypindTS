@@ -6,9 +6,10 @@ interface IKeyBlockProps {
 	requiredLetter: string
 	wrongLetter: string
 	rightLetter: string
+	mistakes: string[]
 }
 
-export const KeyBlock: FC<IKeyBlockProps> = ({ children, requiredLetter, wrongLetter, rightLetter }) => {
+export const KeyBlock: FC<IKeyBlockProps> = ({ children, requiredLetter, wrongLetter, rightLetter, mistakes}) => {
 	const [isWrong, setIsWrong] = React.useState<boolean>(false)
 	// console.log(wrongLetter)
 	const keyNames: Record<string, string> = {
@@ -18,12 +19,12 @@ export const KeyBlock: FC<IKeyBlockProps> = ({ children, requiredLetter, wrongLe
 		Enter: 'enter',
 		ShiftLeft: 'shift',
 		ShiftRight: 'shift',
-		Space: '',
+		Space: ' ',
 		Backslash: '\\',
 	}
 	
 	const keyName = keyNames[children] || children
-
+	console.log(keyNames['Tab'])
 	React.useEffect(() => {
 		// console.log("Effect triggered:", { wrongLetter, keyName });
 		if(wrongLetter.toUpperCase() === keyName){
@@ -44,8 +45,8 @@ export const KeyBlock: FC<IKeyBlockProps> = ({ children, requiredLetter, wrongLe
 				${cl[children] || cl.standartKey}
 				${requiredLetter.toUpperCase() === keyName ? cl.requiredLetter : ''}
 				${isWrong ? cl.wrongLetter : ''}
+				${mistakes.length ? mistakes.includes(keyName) ? cl.mistake : '' : ''}
 				`
-		
 		}
 
 		>

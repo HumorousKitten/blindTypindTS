@@ -36,9 +36,10 @@ interface ISpanArr {
 
 interface ISimulatorStrProps {
 	setIsEnd: (value: boolean) => void
+	setMistakes: (mistakes: string[]) => void
 }
 
-export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd}) => {
+export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes}) => {
 
 	const updateRequiredLetter = useStore(state => state.updateRequiredLetter)
 	const updateRightLetter = useStore(state => state.updateRightLetter)
@@ -54,6 +55,8 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd}) => {
 
 	const simulatorText = React.useRef<HTMLParagraphElement>(null)
 	const index = React.useRef<number>(0)
+	const mistakes: string[] = []
+
 
 	React.useEffect(() => {
 		if (simulatorStr.length === 0) {
@@ -97,12 +100,14 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd}) => {
 			rightLetter(index.current)
 		}
 		else{
+			mistakes.push(Number(e.key) ? e.key : e.key.toUpperCase())
 			updateWrongLetter(simulatorStr.charAt(++letterPos), e.key) 
 			wrongLetter(index.current)
 		}
 
 		if(index.current + 1 === simulatorStr.length) {
 			updateTimer(false)
+			setMistakes(mistakes)
 			setIsEnd(true)
 		}
 

@@ -33,7 +33,7 @@ interface IRunningCatProps {
 	heightPerc?: number
 	heightRem?: number
 
-	isRunning: boolean
+	isRunning: boolean | null
 }
 
 function formatWidth(width: number, unit: string = 'px') {
