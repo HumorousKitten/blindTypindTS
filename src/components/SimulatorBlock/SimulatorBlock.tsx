@@ -5,6 +5,7 @@ import { FinalResults } from '../finalResults/FinalResults'
 import { ProgressBar } from '../progressBar/ProgressBar'
 import { Timer } from '../timer/Timer'
 import { NavigateToLevels } from '../navigateToLevels/NavigateToLevels'
+import { UsefulIcons } from '../../UI/usefulIcons/UsefulIcons'
 import cl from './_SimulatorBlock.module.scss'
 
 
@@ -25,6 +26,7 @@ export const SimulatorBlock = () => {
 				</>
 			)}
 			<ProgressBar mc={isEndLevel ? 'mc' : undefined} endLevel = {isEndLevel ? true : false}/>
+			<UsefulIcons setMistakes = {!isEndLevel ? setMistakes : null}/>
 			{isEndLevel ? <NavigateToLevels mc='mc'/> : null}
 			<KeyBoardBlock mistakes = {isEndLevel ? mistakes : []}/>
 		</div>

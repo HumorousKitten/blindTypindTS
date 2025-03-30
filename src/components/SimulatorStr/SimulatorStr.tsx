@@ -41,6 +41,8 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes}) =>
 			getInitialLevel()
 		}
 
+		if(index.current) index.current = 0
+
 		updateRequiredLetter(simulatorStr.charAt(0))
 		updateDividedSpanStr(addSpan())
 		window.addEventListener('keydown', keyPressing)
