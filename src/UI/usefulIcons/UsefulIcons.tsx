@@ -37,7 +37,7 @@ export const UsefulIcons: FC<IUsefulIcons> = ({ setMistakes }) => {
 		level: level,
 		sublevel: subLevel,
 	})
-	console.log(changeLevel)
+
 
 	const mutation = useMutation({
 		mutationFn: async ({ level, sublevel }: IChangeLevel) => server.getLevel(level, sublevel),
