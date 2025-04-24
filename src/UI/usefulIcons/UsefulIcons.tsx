@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { useImmer } from 'use-immer'
 import again from '../../assets/img/icons/again_buttom.svg'
 import turnHands from '../../assets/img/icons/hands_buttom.svg'
 import lang from '../../assets/img/icons/language_buttom.svg'
@@ -19,11 +18,11 @@ interface IChangeLevel {
 	sublevel: number
 }
 
-async function getSimulatorLevel(level: number, sublevel: number) {
-	const data = server.getLevel(level, sublevel)
+// async function getSimulatorLevel(level: number, sublevel: number) {
+// 	const data = server.getLevel(level, sublevel)
 
-	return data
-}
+// 	return data
+// }
 
 export const UsefulIcons: FC<IUsefulIcons> = ({ setMistakes }) => {
 	const [rotateAnimation, setRotateAnimation] = React.useState<boolean>(false)

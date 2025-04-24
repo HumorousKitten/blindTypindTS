@@ -26,12 +26,14 @@ export interface IFormInputs {
 	login: string
 	email: string
 	password: string
+	isTutor: boolean
 }
 
 export enum InputNamesEnum {
 	login = 'login',
 	email = 'email',
 	password = 'password',
+	isTutor = 'isTutor'
 }
 
 type TLengthInputValue = {

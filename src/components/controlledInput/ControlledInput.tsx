@@ -6,7 +6,7 @@ import { FC } from 'react'
 interface IControlledInputProps {
 	control: Control<IFormInputs>
 	name: InputNamesEnum
-	type: 'number' | 'text' | 'email' | 'password'
+	type: 'number' | 'text' | 'email' | 'password' | 'checkbox'
 	placeholder: string
 	regulations?: IRules
 	error: boolean
@@ -29,6 +29,7 @@ export const ControlledInput: FC<IControlledInputProps> = ({
 			render={({ field }) => (
 				<label>
 					<Input field={field} type={type} placeholder={placeholder} error={error} />
+					{type === 'checkbox' ? <span>Стать учителелем</span> : null}
 					{error ? <span>{errorMessage}</span> : null}
 				</label>
 			)}

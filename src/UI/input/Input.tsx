@@ -4,7 +4,7 @@ import { ControllerRenderProps } from 'react-hook-form'
 
 interface InputInterface {
 	field: ControllerRenderProps<any, string>
-	type: 'text' | 'number' | 'email' | 'password'
+	type: 'text' | 'number' | 'email' | 'password' | 'checkbox'
 	placeholder: string
 	error: boolean
 }

@@ -48,9 +48,12 @@ export const Form = () => {
 			login: '',
 			email: '',
 			password: '',
+			isTutor: false,
 		},
 		mode: 'onBlur',
 	})
+
+
 
 	const onSubmit: SubmitHandler<IFormInputs> = data => {
 		if (!Object.keys(errors).length) {
@@ -60,7 +63,7 @@ export const Form = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<div>
+			<div className={cl.formInputs}>
 				{inputConfigs(isAuthPage).map(
 					({ name, type, placeholder, show, rules }) =>
 						show ? (
