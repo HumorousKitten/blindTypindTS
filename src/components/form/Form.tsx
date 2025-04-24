@@ -54,8 +54,8 @@ export const Form = () => {
 	})
 
 
-
 	const onSubmit: SubmitHandler<IFormInputs> = data => {
+
 		if (!Object.keys(errors).length) {
 			mutation.mutate(data)
 		}

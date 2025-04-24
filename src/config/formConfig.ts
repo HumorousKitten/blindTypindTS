@@ -11,7 +11,7 @@ interface inputConfigsInterface {
 	type: 'number' | 'text' | 'email' | 'password' | 'checkbox'
 	placeholder: string
 	show: boolean
-	rules: IRules
+	rules?: IRules
 }
 
 export const inputConfigs = (isAuthPage: boolean): Array<inputConfigsInterface> => [
@@ -52,8 +52,5 @@ export const inputConfigs = (isAuthPage: boolean): Array<inputConfigsInterface> 
 		type: 'checkbox',
 		placeholder: 'Я учитель',
 		show: !isAuthPage,
-		rules: {
-			required: true,
-		},
 	},
 ]
