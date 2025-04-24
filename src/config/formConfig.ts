@@ -8,10 +8,10 @@ import {
 
 interface inputConfigsInterface {
 	name: InputNamesEnum
-	type: 'number' | 'text' | 'email' | 'password'
+	type: 'number' | 'text' | 'email' | 'password' | 'checkbox'
 	placeholder: string
 	show: boolean
-	rules: IRules
+	rules?: IRules
 }
 
 export const inputConfigs = (isAuthPage: boolean): Array<inputConfigsInterface> => [
@@ -45,5 +45,12 @@ export const inputConfigs = (isAuthPage: boolean): Array<inputConfigsInterface> 
 			minLength: minLength(3, 'Пароль должен быть не менее 3-х символов'),
 			maxLength: maxLength(18, 'Пароль должен быть не более 18 символов'),
 		},
+	},
+
+	{
+		name: InputNamesEnum.isTutor,
+		type: 'checkbox',
+		placeholder: 'Я учитель',
+		show: !isAuthPage,
 	},
 ]

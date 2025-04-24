@@ -8,20 +8,77 @@ form {
 	width: toRem(281);
 	flex-direction: column;
 	
-	div > label {
+	.formInputs > label {
 		display: inline-flex;
 		width: 100%;
 		flex-direction: column;
 	}
 
-	div > label > span {
+
+	.formInputs > label:not(:has(input[type='checkbox'])) > span {
 		font-size: toRem($errorMessage-size);
 		color: $errorMessage-color;
 	}
 
-	div > label + label {
+	.formInputs > label + label {
 		margin-top: toRem(9);
 	}
+
+	.formInputs > label > input[type='checkbox'] {
+		display: none;
+	}
+
+	.formInputs > label:has(input[type='checkbox']) {
+		display: flex;
+		justify-content: center;
+	}
+
+	.formInputs > label:has(input[type='checkbox']) > span {
+		color: $placeholder-color;
+		font-size: toRem($inputType-size);
+	}
+
+	.formInputs > label:has(input[type='checkbox']) {
+		position: relative;
+		cursor: pointer;
+		padding-left: toRem(20);
+	}
+
+	.formInputs > label:has(input[type='checkbox'])::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: toRem(18);
+		height: toRem(18);
+		border: 2px solid #474747;
+		border-radius: toRem(3);
+	}
+
+	.formInputs > label:has(input[type='checkbox']:checked)::before {
+		content: '✓';
+		position: absolute;
+		left: 0;
+		top: 0;
+		color: white;
+		width: toRem(18);
+		height: toRem(18);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: toRem(13);
+		font-weight: 600;
+	}
+
+
+	// input[type='checkbox']:checked::after {
+	// 	content: '✓';
+	// 	position: absolute;
+	// 	left: 0;
+	// 	top: 0;
+	// 	width: toRem(18);
+	// 	height: toRem(18);
+	// }
 }
 
 
