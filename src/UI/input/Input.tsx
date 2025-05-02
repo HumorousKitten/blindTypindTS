@@ -3,10 +3,10 @@ import React from 'react'
 import { ControllerRenderProps } from 'react-hook-form'
 
 interface InputInterface {
-	field: ControllerRenderProps<any, string>
-	type: 'text' | 'number' | 'email' | 'password' | 'checkbox'
+	field?: ControllerRenderProps<any, string>
+	type: 'text' | 'number' | 'email' | 'password' | 'checkbox' | 'search'
 	placeholder: string
-	error: boolean
+	error?: boolean
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputInterface>(({ field, type, placeholder, error }, ref) => {

@@ -1,0 +1,6 @@
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+.wrapper {
+	max-width: toRem(891);
+	width: 100%;
+}

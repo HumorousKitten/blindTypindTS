@@ -6,8 +6,20 @@ import { RegisterPage } from '../pages/Registration/RegistrationPage'
 import { SimulatorPage } from '../pages/SimulatorPage/SimulatorPage'
 import { LevelsPage } from '../pages/LevelsPage/LevelsPage'
 import { Account } from '../pages/account/Account'
+import { CoursePage } from '../pages/coursePage/CoursePage'
+
 
 export const router = createBrowserRouter([
+	{
+		path:'/courses',
+		element: <CoursePage />
+	},
+
+	{
+		path:'/courses/:id',
+		element: <div>course page</div>
+	},
+
 	{
 		element: <IsAuth />,
 		children: [
@@ -26,11 +38,16 @@ export const router = createBrowserRouter([
 	{
 		element: <ProtectedRoutes/>,
 		children: [
-			{
-				path: '/',
-				// element: <SimulatorPage />
-				element: <p>Main page</p>
-			},
+			// {
+			// 	path: '/',
+			// 	// element: <SimulatorPage />
+			// 	element: <p>Main page</p>
+			// },
+
+			// {
+			// 	path: '/', //в будущем поменять на /courses и вынести в отдельный объект, где element будет другой компонент, в котором будет проверяться роль на студента
+			// 	element: <CoursePage />
+			// }
 			// {
 			// 	path: '/levels',
 			// 	element: <LevelsPage />
