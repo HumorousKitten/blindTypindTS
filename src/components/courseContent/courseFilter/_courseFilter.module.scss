@@ -1,0 +1,122 @@
+@use '../../../utils/ScssUtils/toRem.scss' as *;
+@use '../../../scssVariables' as *;
+
+
+.filter {
+	display: flex;
+	align-items: center;
+	height: toRem(42);
+	margin-inline: toRem(2.5);
+
+	&__searchField {
+		max-width: toRem(281);
+		width: 100%;
+		position: relative;
+		font-size: toRem(14);
+		
+		&::before {
+			content: '';
+			position: absolute;
+			background-image: url('../../assets/img/icons/search.svg');
+			width: toRem(24);
+			height: toRem(24);
+			top: 50%;
+			left: toRem(12);
+			transform: translateY(-50%);
+		}
+
+		input {
+			width: 100%;
+			padding-left: toRem(40);
+		}
+
+		input::placeholder {
+			// padding-left: toRem(25);
+		}
+	}
+
+	&__controls {
+		display: inline-flex;
+		align-items: center;
+		column-gap: toRem(28);
+		margin-left: toRem(24);
+		color: $placeholder-color;
+	}
+	
+	&__language {
+		width: toRem(134);
+		height: toRem(20);
+		position: relative;
+		
+		select {
+			cursor: pointer;
+			appearance: none;      
+			-webkit-appearance: none; 
+			-moz-appearance: none;
+			font-size: toRem(14);
+			width: 100%;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: 55%;
+			transform: translateY(-50%);
+			right: toRem(0);
+			width: 0px;
+			height: 0px;
+			border-top: 6px solid $placeholder-color;
+			border-left: 6px solid transparent;
+			border-right: 6px solid transparent;
+			pointer-events: none;
+		}
+	}
+
+
+
+	&__cost{
+		max-width: toRem(105);
+		width: 100%;
+		height: toRem(20);
+		display: inline-flex;
+		align-items: center;
+		position: relative;
+		
+		span {
+			margin-left: toRem(19);
+			font-size: toRem(14);
+		}
+	
+		input {
+			display: none;
+		}
+
+		&::before{
+			content: '';
+			position: absolute;
+			width: toRem(14);
+			height: toRem(14);
+			border: 1px solid $checkbox__border-color;
+			border-radius: toRem(3);
+			cursor: pointer;
+		}
+
+		&:has(input[type="checkbox"]:checked)::before{
+			content: '✓';
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			font-size: toRem(12);
+		}
+	}
+
+	&__favorites {
+		display: inline-flex;
+		align-items: center;
+		color: $placeholder-color;
+		margin-left: auto;
+		gap: toRem(7);
+		cursor: pointer;
+		font-size: toRem(14);
+	}
+}

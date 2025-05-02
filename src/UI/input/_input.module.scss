@@ -2,7 +2,6 @@
 @use '../../scssVariables' as *;
 
 .input {
-	width: 100%;
 	border-radius: toRem(11);
 	background-color: $input-background;
 	padding: toRem(11) toRem(15);

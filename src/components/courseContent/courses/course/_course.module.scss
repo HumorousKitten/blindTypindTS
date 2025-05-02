@@ -1,0 +1,68 @@
+@use '../../../../scssVariables' as *;
+@use '../../../../utils/ScssUtils/toRem.scss' as *;
+
+.course {
+	cursor: pointer;
+	height: 100%;
+	background-color: $courses__background-color;
+	border-radius: toRem(11);
+	padding: 18px 26px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+
+	transition: transform .7s linear;
+
+	&:hover {
+		transform: scale(1.1);
+	}
+
+	&__title {
+		color: $main-color;
+		font-weight: 700;
+		font-size: toRem(16);
+		font-family: $font-family__DroidSans--bold;
+		width: 20ch;
+		white-space: pre-line;
+	}
+
+	svg {
+		position: absolute;
+		top: 0;
+		right: 26px;
+		top: 18px;
+	}
+
+	&__description{
+		color: $course-color;
+		font-size: toRem(13);
+		font-family: $font-family__DroidSans;
+		line-height: 120%;
+		margin-top: toRem(10);
+		white-space: pre-line;
+	}
+
+	&__statistics {
+		display: inline-flex;
+		column-gap: toRem(8);
+		align-items: center;
+		margin-top: auto;
+		color: $course-color;
+		div {
+			display: inline-flex;
+			align-items: center;
+			gap: toRem(2);
+		}
+
+	}
+
+	&__cost {
+		color: $action-color;
+	}
+
+}
+
+.adminCourse {
+	grid-row: span 2;
+}
+

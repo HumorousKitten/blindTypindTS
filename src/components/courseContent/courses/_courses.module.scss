@@ -1,0 +1,43 @@
+@use '../../../scssVariables' as *;
+@use '../../../utils/ScssUtils/toRem.scss' as *;
+
+.courses {
+	margin-top: toRem(38);
+	position: relative;
+
+	&__title {
+		color: $main-color;
+		font-weight: 700;
+		font-size: toRem(23);
+		margin-bottom: toRem(20);
+	}
+	
+	&__items {
+		display: grid;
+		gap: toRem(24);
+		grid-template-columns: repeat(3, toRem(281));
+		grid-template-rows: repeat(2, toRem(218));
+	}
+
+	&__paginate {
+		position: absolute;
+		top: 50%;
+		z-index: 999;
+		width: toRem(45);
+		height: toRem(45);
+		border-radius: 50%;
+		background-color: $pagination__background-color;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+}
+
+.prev__course {
+	left: toRem(-50);
+}
+
+.next__course {
+	right: toRem(-50);
+}
