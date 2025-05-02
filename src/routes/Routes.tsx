@@ -16,6 +16,11 @@ export const router = createBrowserRouter([
 	},
 
 	{
+		path:'/courses/:id',
+		element: <div>course page</div>
+	},
+
+	{
 		element: <IsAuth />,
 		children: [
 			{

@@ -3,18 +3,21 @@
 
 .course {
 	cursor: pointer;
-	height: 100%;
 	background-color: $courses__background-color;
 	border-radius: toRem(11);
-	padding: 18px 26px;
-	position: relative;
-	display: flex;
-	flex-direction: column;
 
-	transition: transform .7s linear;
+	transition: transform 0.7s linear;
 
 	&:hover {
 		transform: scale(1.1);
+	}
+
+	&__link {
+		padding: 18px 26px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
 	}
 
 	&__title {
@@ -33,7 +36,7 @@
 		top: 18px;
 	}
 
-	&__description{
+	&__description {
 		color: $course-color;
 		font-size: toRem(13);
 		font-family: $font-family__DroidSans;
@@ -53,16 +56,13 @@
 			align-items: center;
 			gap: toRem(2);
 		}
-
 	}
 
 	&__cost {
 		color: $action-color;
 	}
-
 }
 
 .adminCourse {
 	grid-row: span 2;
 }
-
