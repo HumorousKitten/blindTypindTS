@@ -1,21 +1,26 @@
 @use '../../utils/ScssUtils/toRem.scss' as *;
+@use '../../scssVariables' as *;
 
 .LevelsBlock {
-	position: relative;
 	width: -moz-fit-content;
 	width: fit-content;
 	margin: toRem(70) auto;
 	color: #ffffff;
+	white-space: pre-wrap;
 
 	.titleBlock {
 		display: flex;
-		justify-content: center;
-		margin-bottom: toRem(20);
+		justify-content: space-between;
+		margin-bottom: toRem(54);
 		align-items: center;
-	}
-	.titleBlock > img {
-		position: absolute;
-		right: 0;
-		cursor: pointer;
+		
+		h1 {
+			font-family: $font-family__DroidSans--bold;
+			font-size: toRem(23);
+		}
+
+		img {
+			cursor: pointer;
+		}
 	}
 }

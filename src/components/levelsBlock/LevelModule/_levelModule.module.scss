@@ -1,0 +1,14 @@
+@use '../../../scssVariables' as *;
+
+.module {
+	h3 {
+		font-family: $font-family__DroidSans--bold;
+		line-height: 120%;
+		margin-bottom: 11px;
+		color: $course-color;
+	}
+
+	& + & {
+		margin-top: 25px;
+	}
+}

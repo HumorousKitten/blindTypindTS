@@ -1,21 +1,24 @@
+@use '../../../utils/ScssUtils/toRem.scss' as *;
+@use '../../../scssVariables' as *;
+
 .lvlBlock{
     color: rgba(255, 255, 255, 0.5);
     width: 41.0625rem;
     background: #1B1B1B;
-    border-radius: 11px;
+    border-radius: toRem(11);
     height: 3.3125rem;    
-    margin-bottom: 10px;
+    margin-bottom: toRem(10);
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+    padding-inline: toRem(25);
+    font-family: $font-family__Inter;
 
     span:first-child{
-        font-weight: 700;
-        font-size: 1.3125rem;
-        margin-right: 23px;
-        margin-left: 25px;
-        width: 1rem;
+        font-size: toRem(20);
+        margin-right: toRem(23);
+        font-family: $font-family__Inter--bold;
     }
     
     .infoOfLevel{
@@ -25,19 +28,15 @@
 
     .progressBlock{
         display: flex;
-        position: relative;
-        left: -140px;
+        gap: 5px;
         div{
-           position: absolute;
-           width: 48px;
+           width: 20px;
            height: 10px;
-           bottom: -5px; 
-           margin-right: 5px;
+           transition: transform .5s linear;
         }
 
-        div:hover{
-            height: 14px;
-            transition: 0.5s;
+        div:hover {
+            transform: scale(1.3);
         }
     }
 }

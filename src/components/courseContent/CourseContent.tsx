@@ -7,7 +7,7 @@ import cl from './_courseContent.module.scss'
 export const CourseContent = () => {
 	return (
 		<main className={cl.main}>
-			<Wrapper>
+			<Wrapper wrapperSize={'thinSize'}>
 				<CourseFilter />
 				<Courses />
 			</Wrapper>

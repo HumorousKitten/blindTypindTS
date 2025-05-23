@@ -1,0 +1,70 @@
+@use '../../scssVariables' as *;
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+.infoLevelSection {
+	display: flex;
+	justify-content: center;
+	padding-top: 50px;
+}
+
+.modalContent {
+	background-color: $courses__background-color;
+	border-radius: toRem(11);
+	padding: 69px 216px 69px 145px;
+	font-family: $font-family__DroidSans;
+	color: $course-color;
+	word-break: break-word;
+	max-height: toRem(1000);
+	position: relative;
+
+	h1 {
+		font-family: $font-family__DroidSans--bold;
+		font-size: toRem(23);
+		line-height: 120%;
+		color: $main-color;
+		margin-bottom: toRem(35);
+	}
+
+	h2 {
+		margin-top: toRem(35);
+		font-family: $font-family__DroidSans--bold;
+		line-height: 120%;
+	}
+
+	p {
+		font-size: toRem(13);
+		line-height: 120%;
+		text-align: justify;
+		margin-bottom: toRem(20);
+	}
+
+	p + ul,
+	p + ol {
+		margin-top: toRem(-20);
+	}
+
+	ul {
+		padding-left: toRem(20);
+	}
+
+	ul,
+	ul li {
+		list-style-type: disc;
+		font-size: toRem(13);
+		line-height: 120%;
+	}
+
+	img,
+	video,
+	picture {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	button:last-child {
+		font-family: $font-family__Inter--bold;
+		padding: toRem(10) toRem(38);
+		margin-top: toRem(32);
+	}
+}

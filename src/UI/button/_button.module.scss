@@ -8,6 +8,38 @@
 	font-weight: 700;
 }
 
+.closeBtn {
+	position: absolute;
+	right: 51px;
+	top: 41px;
+	width: 36px;
+	height: 36px;
+	border: none;
+	cursor: pointer;
+	border: none !important;
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 18px;
+		height: 3px;
+		background-color: #ffffff;
+		transform-origin: center;
+	}
+
+	&::before {
+		transform: translate(-50%, -50%) rotate(45deg);
+	}
+
+	&::after {
+		transform: translate(-50%, -50%) rotate(-45deg);
+	}
+
+	
+}
+
 .wrongAuth {
 	background-color: $wrongAuth-background;
 }
@@ -22,6 +54,8 @@
 
 .backgroundColorTransparent {
 	background: transparent;
+	border: 2px solid $action-color;
+	color: $action-color;
 }
 
 .mc {

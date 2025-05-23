@@ -1,27 +1,4 @@
 
-
-
-export enum KeyCodes {
-	'`' = "Backquote", // `
- '-' = "Minus", // -
- '=' = "Equal", // =
- '[' = "BracketLeft", // [
- ']' = "BracketRight", // ]
- ';' = "Semicolon", // ;
- '\'' = "Quote", // '
- ',' = "Comma", // ,
- '.' = "Period", // .
- '/' = "Slash",
- 'Backspace' = '<-',
- 'Tab' = 'tab' ,
- 'CapsLock' = 'caps',
- 'Enter' = 'enter',
- 'ShiftLeft' = 'shift',
- 'ShiftRight' = 'shift',
- 'Space' = '',
- 'Backslash' = '\\'
-}
-
 export interface IFormInputs {
 	login: string
 	email: string
@@ -54,4 +31,72 @@ export interface IRules {
 	maxLength?: TLengthInputValue
 	pattern?: TPatternInput
 	// validate: ??? какая-то функция для проверки валидации
+}
+
+interface ICourseStats {
+	ratingAvg: string
+	enrollmentsCount: number
+}
+
+export interface ICourseDetail {
+	title: string
+	avgDuration: number
+	price: string
+	favorite: boolean
+	details: {
+		will_learn: string
+		about_course: string
+		for_whom: string
+		preview_image: string
+	}
+	stats: ICourseStats
+}
+
+export interface ICourse {
+	id: number
+	title: string
+	shortDesc: string
+	previewImage: string
+	avgDuration: number
+	price: string
+	slug: string
+	favorite: boolean
+	fromWhom: 'admin' | 'user'
+	stats: ICourseStats
+}
+
+export interface ICourses {
+	data: Array<ICourse>
+	total: number
+	pages: number
+}
+
+
+export interface ICourseSubLevels {
+	id: number
+	level_id: number
+	content: string
+	order: number
+}
+
+export interface ICourseLevels {
+	id: number
+	level_block_id: number
+	title: string
+	type: 'lecture' | 'practice'
+	order: number
+	courseSubLevels: Array<ICourseSubLevels>
+}
+
+export interface ICourseModule {
+	id: number
+	course_id: number
+	title: string
+	order: number
+	courseLevels:Array<ICourseLevels>
+}
+
+export interface ICourseTasks {
+	main_title: string
+	modules: Array<ICourseModule>
 }
