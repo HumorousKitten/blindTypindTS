@@ -6,14 +6,15 @@ interface IAdditionClasses {
 	display?: 'block'
 	background: 'blue' | 'transparent'
 	margin?: 'auto'
+	closeBtn?: boolean
 }
 
 interface IButton {
-	children: ReactNode
+	children?: ReactNode
 	type?: 'button' | 'reset' | 'submit'
 	additionalClasses?: IAdditionClasses
 	isLoading?: boolean
-	// onClick: React.MouseEventHandler<HTMLButtonElement>
+	onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Button: FC<IButton> = ({
@@ -21,6 +22,7 @@ const Button: FC<IButton> = ({
 	type = 'submit',
 	additionalClasses,
 	isLoading,
+	onClick
 }) => {
 	return (
 		<button
@@ -35,7 +37,9 @@ const Button: FC<IButton> = ({
 							: cl.backgroundColorTransparent
 					}
 					${additionalClasses?.margin === 'auto' ? cl.mc : ''}
+					${additionalClasses?.closeBtn ? cl.closeBtn : ''}
 				`}
+			onClick = {onClick}
 		>
 			{isLoading ? 'Loading...' : children}
 		</button>

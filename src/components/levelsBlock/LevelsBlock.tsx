@@ -4,38 +4,35 @@ import { server } from '../../server/server'
 import cl from './_LevelssBlock.module.scss'
 
 import exit from '../../assets/img/icons/close cross.svg'
-import { LevelBlock} from './LevelBlock/LevelBlock'
-import { useNavigate } from 'react-router-dom'
+import { LevelModule } from './LevelModule/LevelModule'
+import { useNavigate, useParams } from 'react-router-dom'
+import { FC } from 'react'
 
-async function getUserLevelQuery() {
-	const token = server.readCookie('token')
+async function getUserLevelQuery(course_id: number) {
+	// const token = server.readCookie('token')
+	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'
 	if (!token) return
-	return await server.getUserLevels(token)
+
+	return await server.getCourseTasks(course_id, token)
 }
 
-export const LevelsBlock = () => {
+interface ILevelBlock {
+	openModal: (value: boolean) => void
+}
+
+export const LevelsBlock: FC<ILevelBlock> = ({openModal}) => {
+	const { slug, id } = useParams()  
+
 	const { data, isLoading } = useQuery({
-		queryKey: ['levels'],
-		queryFn: getUserLevelQuery,
+		queryKey: ['levels_page', slug, id],
+		queryFn: () => getUserLevelQuery(+(id as string)),
 	})
 	const navigate = useNavigate()
-
-	const levels: readonly string[] = [
-		'Test',
-		'F, J and U Keys',
-		'D, E, K and I Keys',
-		'S, W, L and O Keys',
-		'G, T, H and Y Keys',
-		'A, Q and P Keys',
-		'R, B and N Keys',
-		'V, M and C Keys',
-		'X and Z Keys',
-	]
 
 	return (
 		<div className={cl.LevelsBlock}>
 			<div className={cl.titleBlock}>
-				<h5>Выбор уровня</h5>
+				<h1>{data?.main_title}</h1>
 				<img
 					src={exit}
 					width='24'
@@ -43,16 +40,7 @@ export const LevelsBlock = () => {
 					onClick = {() => navigate('/')}
 				/>
 			</div>
-			{!isLoading ? levels.map((item, index) => {
-				return (
-					<LevelBlock
-						key={index}
-						index={index}
-						value={item}
-						completedSubLevels={data ? data : []}
-					/>
-				)
-			}) : null}
+			{(!isLoading && data) ? data.modules.map(item => <LevelModule module={item} key={item.id} openModal = {openModal}/>) : null}
 		</div>
 	)
 }

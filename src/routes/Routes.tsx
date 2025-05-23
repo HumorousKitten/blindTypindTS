@@ -6,18 +6,23 @@ import { RegisterPage } from '../pages/Registration/RegistrationPage'
 import { SimulatorPage } from '../pages/SimulatorPage/SimulatorPage'
 import { LevelsPage } from '../pages/LevelsPage/LevelsPage'
 import { Account } from '../pages/account/Account'
-import { CoursePage } from '../pages/coursePage/CoursePage'
-
+import { CoursesPage } from '../pages/coursePage/CoursesPage'
+import { CourseInfo } from '../pages/course/CourseInfo'
 
 export const router = createBrowserRouter([
 	{
 		path:'/courses',
-		element: <CoursePage />
+		element: <CoursesPage />
 	},
 
 	{
-		path:'/courses/:id',
-		element: <div>course page</div>
+		path:'/courses/:slug/:id',
+		element: <CourseInfo />
+	},
+
+	{
+		path:'/level_page/:slug/:id',
+		element: <LevelsPage />
 	},
 
 	{

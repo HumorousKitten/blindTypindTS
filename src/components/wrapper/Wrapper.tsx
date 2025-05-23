@@ -4,11 +4,12 @@ import cl from './_wrapper.module.scss'
 
 interface IWrapperProps {
 	children: ReactNode
+	wrapperSize: 'thinSize' | 'regularSize' | 'bigSize'
 }
 
-export const Wrapper: FC<IWrapperProps> = ({children}) => {
+export const Wrapper: FC<IWrapperProps> = ({children, wrapperSize}) => {
 	return (
-		<div className={cl.wrapper}>
+		<div className={cl[wrapperSize]}>
 			{children}
 		</div>
 	);

@@ -1,0 +1,140 @@
+@use '../../scssVariables' as *;
+
+.main {
+	display: flex;
+	justify-content: center;
+}
+
+.course__content {
+	padding: 69px 135px;
+	white-space: pre-line;
+	display: grid;
+	grid-template-columns: 1fr 280px;
+	color: $main-color;
+	background-color: $courses__background-color;
+	border-radius: 11px;
+	align-items: start;
+	position: relative;
+
+	&__closeBtn {
+		position: absolute;
+		right: 51px;
+		top: 41px;
+		width: 18px;
+		height: 18px;
+
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+
+		&::before, &::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 18px;
+			height: 3px;
+			background-color: #ffffff;
+			transform-origin: center;
+		}
+
+		&::before {
+			transform: translate(-50%, -50%) rotate(45deg);
+		}
+
+		&::after {
+			transform: translate(-50%, -50%) rotate(-45deg);
+		}
+	}
+
+	&__info
+	{
+
+		width: 70%;
+		p { 
+			color: $course-color;
+			font-family: $font-family__DroidSans;
+			font-size: 13px;
+		}
+
+		picture {
+			display: block;
+			width: 100%;
+			img {
+				width: 100%;
+				height: auto;
+			}
+		}
+	}
+
+	&__title {
+		font-family: $font-family__DroidSans--bold;
+		font-size: 23px;
+	}
+
+	&__subtitle {
+		color: $course-color;
+		font-family: $font-family__DroidSans--bold;
+		margin-block: 30px 10px;
+	}
+
+	&__action {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: sticky;
+		picture {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+			width: 100%;
+			height: 170px;
+			border-radius: 11px;
+
+			img {
+				max-width: 100%;
+				max-height: 100%;
+				object-fit: contain;
+			}
+		}
+
+		button {
+			width: 100%;
+			padding-block: 12px;
+			border-radius: 11px;
+			font-family: $font-family__Inter--bold;
+			margin-top: 40px;
+		}
+
+		button + button {
+			margin-top: 9px;
+		} 
+
+		.subscribeBtn {
+			background-color:  $action-color;
+		}
+
+		.addFavorite {
+			border: 2px solid $action-color;
+			color: $action-color;
+		}
+
+		&__cost {
+			margin-top: 11px;
+			color: $action-color;
+			font-family: $font-family__DroidSans;
+		}
+
+		&__stats {
+			margin-top: 60px;
+			color: $course-color;
+			align-self: self-start;
+			p {
+				display: flex;
+				align-items: center;
+				gap: 3px;
+			}
+		}
+	}
+}

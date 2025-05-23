@@ -13,11 +13,43 @@
 	}
 
 	&__link {
-		padding: 18px 26px;
-		position: relative;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
+		text-decoration: none;
+	}
+
+	&__image {
+		max-height: toRem(146);
+		overflow: hidden;
+		background-color: #72bcf4;
+		border-radius: toRem(11) toRem(11) 0 0;
+		padding-top: 10px;
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	&__favorite {
+		background-color: none;
+		border: none;
+		padding: 8px;
+		margin: -8px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-right: 18px;
+		margin-top: 8px;
+	}
+
+	&__favorite svg {
+		pointer-events: none;
+		width: 21px;
+		height: 21px;
 	}
 
 	&__title {
@@ -25,15 +57,9 @@
 		font-weight: 700;
 		font-size: toRem(16);
 		font-family: $font-family__DroidSans--bold;
-		width: 20ch;
 		white-space: pre-line;
-	}
-
-	svg {
-		position: absolute;
-		top: 0;
-		right: 26px;
-		top: 18px;
+		padding: 18px 26px 0;
+		flex: 1;
 	}
 
 	&__description {
@@ -43,6 +69,7 @@
 		line-height: 120%;
 		margin-top: toRem(10);
 		white-space: pre-line;
+		padding: 0 26px;
 	}
 
 	&__statistics {
@@ -51,6 +78,7 @@
 		align-items: center;
 		margin-top: auto;
 		color: $course-color;
+		padding: 0 26px;
 		div {
 			display: inline-flex;
 			align-items: center;
@@ -60,6 +88,7 @@
 
 	&__cost {
 		color: $action-color;
+		padding: 0 26px 18px;
 	}
 }
 

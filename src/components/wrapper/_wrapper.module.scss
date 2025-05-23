@@ -1,6 +1,11 @@
 @use '../../utils/ScssUtils/toRem.scss' as *;
 
-.wrapper {
+.thinSize {
 	max-width: toRem(891);
+	width: 100%;
+}
+
+.regularSize {
+	max-width: toRem(1310);
 	width: 100%;
 }
