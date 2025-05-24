@@ -7,6 +7,7 @@ interface IAdditionClasses {
 	background: 'blue' | 'transparent'
 	margin?: 'auto'
 	closeBtn?: boolean
+	modalPrimary?: boolean
 }
 
 interface IButton {
@@ -38,6 +39,7 @@ const Button: FC<IButton> = ({
 					}
 					${additionalClasses?.margin === 'auto' ? cl.mc : ''}
 					${additionalClasses?.closeBtn ? cl.closeBtn : ''}
+					${additionalClasses?.modalPrimary ? cl.modalPrimary: ''}
 				`}
 			onClick = {onClick}
 		>

@@ -1,16 +1,34 @@
+import { useQuery } from '@tanstack/react-query'
 import { FC } from 'react'
-import { Modal } from '../../UI/Modal/Modal'
 import { Wrapper } from '../wrapper/Wrapper'
-import cl from './_infoLevelModal.module.scss'
+import { VideoPlayer } from '../../UI/videoPlayer/VideoPlayer'
+import { Modal } from '../../UI/Modal/Modal'
 import Button from '../../UI/button/Button'
+import { server } from '../../server/server'
+import cl from './_infoLevelModal.module.scss'
+
 
 interface InfoLevelModalInterface {
 	isOpen: boolean
 	setIsOpen: (value: boolean) => void
+	levelId: number
+}
+
+function getInfo(levelId: number){
+	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'
+
+	return server.getLevelInfo(levelId, token)
 }
 
 
-export const InfoLevelModal: FC<InfoLevelModalInterface> = ({ isOpen, setIsOpen }) => {
+export const InfoLevelModal: FC<InfoLevelModalInterface> = ({ isOpen, setIsOpen, levelId }) => {
+	const {data, isLoading, error} = useQuery({
+		queryKey: ['levels', levelId],
+		queryFn: () => getInfo(levelId)
+	})
+
+	console.log(data)
+
 	return (
 		<Modal isOpen={isOpen} setIsOpen = {setIsOpen}>
 			<section className={cl.infoLevelSection}>
@@ -21,37 +39,12 @@ export const InfoLevelModal: FC<InfoLevelModalInterface> = ({ isOpen, setIsOpen 
 						className={cl.modalContent}
 					>
 						<Button additionalClasses={{background: "transparent", closeBtn: true}} onClick={() => setIsOpen(false)}></Button>
-						<h1>Как работает мышечная память</h1>
-						<h2>Что такое мышечная память</h2>
-						<p>Мышечная память - это долгосрочная форма процедурной памяти, позволяющая выполнять сложные двигательные действия без участия сознательного контроля. С точки зрения нейронауки она формируется за счет синаптической пластичности: многократная активация одной и той же цепочки нейронов усиливает прочность синаптических соединений (правило Хэбба - "нейроны, которые стреляют вместе, соединяются вместе").</p>
-						<p>В слепой печати задействуются: </p>
-						<ul>
-							<li>Премоторная кора - планирование движения пальцев</li>
-							<li>Первичная моторная кора - отправка импульсов к мышцам кисти</li>
-							<li>Мозжечок - тонкая калибровка скорости и амплитуды</li>
-							<li>Базальные ганглии - перевод действия в режим "по умолчанию"</li>
-							<li>Спинной мозг - рефлекторное проведение сигнала к межкостным мышцам кисти.</li>
-						</ul>
-						<p>Когда навык закрепился, префронтальная кора почти не активируется - высвобождая "оперативную память" для осмысленного содержания текста, а не для поиска клавиш.</p>
-
-						<h2>Три классических этапа формирования навыка</h2>
-						<picture><img src="" alt="" /></picture>
-						<p>Если вы автоматизируете неправильное движение, переучиваться будет в 4-5 раз дольше. Поэтому курс начинается с постановки рук на "домашний ряд" и четкого распределения клавиш между пальцами.</p>
-						<p>Правильная моторная схема экономит микросекунды на каждом нажатии; при печати 2000 знаков это минуты рабочего времени и сотни лишних суставных движений.</p>
-
-						<h2>Почему первоначальная постановка рук критична</h2>
-						<p>Любая моторная программа фиксируется такой, какой вы ее повторяете. Если с первого дня палец мизинец "перепрыгивает" через другие, мозг сохранит именно эту траекторию - и исправление потребует многократного "перезаписывания" синапсов.</p>
-						<p>Исследования эргономики клавиатур показывают: </p>
-						<ul>
-							<li>При отклонении кисти более чем на 15' от нейтральной оси время переноса пальца увеличивается на 8-12мс.</li>
-							<li>Чрезмерный разгиб запястья (>30') удваивает риск синдрома запястного канала у активных наборщиков.</li>
-						</ul>
-						<p>Поэтому мы начинаем с "домашнего ряда" (ФЫВА-ОЛДЖ) и строгого рапределения клавиш между пальцами; каждый палец "знает" свою колонку.</p>
-
-						<h2>Механика тренировки мышечной памяти</h2>
-						<picture><img src="" alt="" /></picture>
-						{/* если тип уровня lecture то в кнопке Далее, если practice то Практика */}
-						<Button additionalClasses={{background: 'blue'}} >Далее</Button>
+						<h1>{data ? data.title : null}</h1>
+						{data?.levelInfo && data.levelInfo.description ? <div dangerouslySetInnerHTML={{__html: data.levelInfo.description}}></div> : null}
+						
+						
+						{data?.levelInfo && data.levelInfo.video_url ? <VideoPlayer src={data.levelInfo.video_url}/>: null}
+						<Button additionalClasses={{background: 'blue', modalPrimary: true}}>{data?.type === 'lecture' ? 'Далее' : 'Практика'}</Button>
 					</div>
 				</Wrapper>
 			</section>

@@ -100,3 +100,12 @@ export interface ICourseTasks {
 	main_title: string
 	modules: Array<ICourseModule>
 }
+
+export interface ILevelInfo {
+	title: string
+	type: 'lecture' | 'practice'
+	levelInfo: {
+		description?: string
+		video_url?: string
+	}
+}
