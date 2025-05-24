@@ -6,6 +6,7 @@ import cl from './_LevellBlock.module.scss'
 interface ILevelBlock {
 	courseLevel: ICourseLevels
 	openModal: (value: boolean) => void
+	setLevelId: (value: number) => void
 }
 
 // export const LevelBlock: FC<ILevelBlock> = ({ courseLevel }) => {
@@ -36,12 +37,22 @@ interface ILevelBlock {
 // 	)
 // }
 
-export const LevelBlock: FC<ILevelBlock> = ({ courseLevel, openModal }) => {
+export const LevelBlock: FC<ILevelBlock> = ({
+	courseLevel,
+	openModal,
+	setLevelId,
+}) => {
 	// const navigate = useNavigate()
 	// const updateSimulatorLevel = useStore(state => state.updateSimulatorLevel)
 
 	return (
-		<div className={cl.lvlBlock} onClick={() => openModal(true)}>
+		<div
+			className={cl.lvlBlock}
+			onClick={() => {
+				openModal(true)
+				setLevelId(courseLevel.id)
+			}}
+		>
 			<div className={cl.infoOfLevel}>
 				<span>{courseLevel.order}</span>
 				<span>{courseLevel.title}</span>

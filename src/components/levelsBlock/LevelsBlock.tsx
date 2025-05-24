@@ -18,9 +18,10 @@ async function getUserLevelQuery(course_id: number) {
 
 interface ILevelBlock {
 	openModal: (value: boolean) => void
+	setLevelId: (value: number) => void
 }
 
-export const LevelsBlock: FC<ILevelBlock> = ({openModal}) => {
+export const LevelsBlock: FC<ILevelBlock> = ({openModal, setLevelId}) => {
 	const { slug, id } = useParams()  
 
 	const { data, isLoading } = useQuery({
@@ -40,7 +41,7 @@ export const LevelsBlock: FC<ILevelBlock> = ({openModal}) => {
 					onClick = {() => navigate('/')}
 				/>
 			</div>
-			{(!isLoading && data) ? data.modules.map(item => <LevelModule module={item} key={item.id} openModal = {openModal}/>) : null}
+			{(!isLoading && data) ? data.modules.map(item => <LevelModule module={item} key={item.id} openModal = {openModal} setLevelId={setLevelId}/>) : null}
 		</div>
 	)
 }
