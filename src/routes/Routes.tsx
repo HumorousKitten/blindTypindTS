@@ -26,6 +26,11 @@ export const router = createBrowserRouter([
 	},
 
 	{
+		path: '/course-content/:task_title/subTask/:subTaskId',
+		element: <h1>sdffffff</h1>
+	}, 
+
+	{
 		element: <IsAuth />,
 		children: [
 			{
