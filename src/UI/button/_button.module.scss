@@ -54,7 +54,6 @@
 
 .backgroundColorTransparent {
 	background: transparent;
-	border: 2px solid $action-color;
 	color: $action-color;
 }
 
@@ -66,4 +65,8 @@
 	font-family: $font-family__Inter--bold;
 	padding: toRem(10) toRem(38);
 	margin-top: toRem(32);
+}
+
+.blueBorder {
+	border: 2px solid $action-color;
 }

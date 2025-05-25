@@ -1,4 +1,4 @@
-import { ICourseDetail, ILevelInfo, ICourses, ICourseTasks} from '../types/types'
+import { ICourseDetail, ILevelInfo, ICourses, ICourseTasks, ISubLevel} from '../types/types'
 
 interface IParams {
 	path?: string
@@ -16,6 +16,7 @@ interface IServer {
 	subscribeOnCourse(course_id: number, token: string): Promise<boolean>
 	getCourseTasks(course_id: number, token: string): Promise<ICourseTasks>
 	getLevelInfo(level_id: number, token: string): Promise< ILevelInfo>
+	getSubLevel(id: number, token: string): Promise<ISubLevel>
 	login(email: string, password: string): Promise<string>
 	registration(
 		login: string,
@@ -121,6 +122,10 @@ class Server implements IServer {
 
 	async getLevelInfo(level_id: number, token: string): Promise<ILevelInfo> {
 		return await this.send<ILevelInfo>({token, path: 'course/level', level_id})
+	}
+
+	async getSubLevel(id: number, token: string): Promise<ISubLevel> {
+		return await this.send<ISubLevel>({token, path: 'course-content/sublevel', id})
 	}
 
 	async login(email: string, password: string): Promise<string> {
