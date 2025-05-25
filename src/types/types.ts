@@ -75,7 +75,6 @@ export interface ICourses {
 export interface ICourseSubLevels {
 	id: number
 	level_id: number
-	content: string
 	order: number
 }
 

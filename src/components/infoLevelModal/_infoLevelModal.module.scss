@@ -16,7 +16,7 @@
 	word-break: break-word;
 	max-height: toRem(1000);
 	position: relative;
-	overflow-y: scroll;
+	overflow-y: auto;
 
 	h1 {
 		font-family: $font-family__DroidSans--bold;
@@ -62,10 +62,4 @@
 		display: block;
 		margin-bottom: toRem(23);
 	}
-
-	// button:last-child {
-	// 	font-family: $font-family__Inter--bold;
-	// 	padding: toRem(10) toRem(38);
-	// 	margin-top: toRem(32);
-	// }
 }
