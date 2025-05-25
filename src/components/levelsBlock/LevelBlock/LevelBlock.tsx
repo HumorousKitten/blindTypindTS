@@ -14,7 +14,7 @@ export const LevelBlock: FC<ILevelBlock> = ({
 	openModal,
 	setLevelId,
 }) => {
-	console.log(courseLevel)
+
 	return (
 		<div
 			className={cl.lvlBlock}
@@ -61,6 +61,7 @@ const SubLevels: FC<ISubLevels> = ({ subLevel, isFirst, isLast, title, order }) 
 	return (
 		<Link
 			to={`/course-content/${slugify(title)}/subTask/${order}.${subLevel.order}`}
+			state={{subLevelId: subLevel.id}}
 			onClick={e => e.stopPropagation()}
 			className={cl.subLevel}
 		>

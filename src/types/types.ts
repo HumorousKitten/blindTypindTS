@@ -108,3 +108,7 @@ export interface ILevelInfo {
 		video_url?: string
 	}
 }
+
+export interface ISubLevel {
+	content: string
+}

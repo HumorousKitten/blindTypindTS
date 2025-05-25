@@ -80,7 +80,7 @@ export const CourseDetails = () => {
 							</picture>
 
 							<Button additionalClasses = {{background: 'blue'}} onClick = {!checkSubscribe.data ? handleSubscribe : () => navigate(`/level_page/${slug}/${id}`)}>{!checkSubscribe.data ? 'Записаться на курс' : 'Перейти в курс'}</Button>
-							<Button additionalClasses = {{background: 'transparent'}} >{!courseDetail.data.favorite ? 'Добавить в избранное' : 'Убрать  из избранного'}</Button>
+							<Button additionalClasses = {{background: 'transparent', border: true}} >{!courseDetail.data.favorite ? 'Добавить в избранное' : 'Убрать  из избранного'}</Button>
 
 							<p className={cl.course__content__action__cost}>{!+courseDetail.data.price ? 'Бесплатно' : courseDetail.data.price}</p>
 
