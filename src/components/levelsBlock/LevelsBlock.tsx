@@ -29,7 +29,7 @@ export const LevelsBlock: FC<ILevelBlock> = ({openModal, setLevelId}) => {
 		queryFn: () => getUserLevelQuery(+(id as string)),
 	})
 	const navigate = useNavigate()
-
+	
 	return (
 		<div className={cl.LevelsBlock}>
 			<div className={cl.titleBlock}>
@@ -41,7 +41,7 @@ export const LevelsBlock: FC<ILevelBlock> = ({openModal, setLevelId}) => {
 					onClick = {() => navigate('/')}
 				/>
 			</div>
-			{(!isLoading && data) ? data.modules.map(item => <LevelModule module={item} key={item.id} openModal = {openModal} setLevelId={setLevelId}/>) : null}
+			{(!isLoading && data) ? data.modules.map(item => <LevelModule module={item} key={item.id} openModal = {openModal} setLevelId={setLevelId} slug={slug}/>) : null}
 		</div>
 	)
 }

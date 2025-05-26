@@ -1,25 +1,26 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../UI/button/Button';
-import { useStore } from '../../state/store';
-
 import cl from './_navigateToLevels.module.scss'
 
 import bookLevel from '../../assets/img/icons/level_book.svg'
 
 interface INavigateToLevelsProps{
 	mc?: 'mc'
+	slug: string
+	courseId: number
+	title: number
 }
 
-export const NavigateToLevels: FC<INavigateToLevelsProps> = ({mc}) => {
-	const {level, subLevel} = useStore(state => state.simulatorLevel)
+export const NavigateToLevels: FC<INavigateToLevelsProps> = ({mc, slug, courseId, title}) => {
+
+	
 
 	return (
 		<Button additionalClasses={{display: 'block', background: 'transparent', margin: mc ? 'auto' : undefined}} type={'button'}>
-			<Link className={cl.navigateToLevels} to={'/levels'}>
+			<Link className={cl.navigateToLevels} to={`/level_page/${slug}/${courseId}`}>
 				<img src={bookLevel} alt="levelPageIcon" />
-				<span className={cl.level}>Уровень</span>
-				<span className={cl.level}>{!level ? level : level + '.' + subLevel}</span>
+				<span className={cl.level}>{title}</span>
 			</Link>
 		</Button>
 	);

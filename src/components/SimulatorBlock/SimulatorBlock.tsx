@@ -7,28 +7,41 @@ import { Timer } from '../timer/Timer'
 import { NavigateToLevels } from '../navigateToLevels/NavigateToLevels'
 import { UsefulIcons } from '../../UI/usefulIcons/UsefulIcons'
 import cl from './_SimulatorBlock.module.scss'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 export const SimulatorBlock = () => {
-  const [isEndLevel, setIsEndLevel] = React.useState<boolean>(false) 
+	const navigate = useNavigate()
+	const location = useLocation()
 
+
+	const {slug, courseId, title, countSubLevels, lang, levelId, sublevel} = location.state
+
+	const [isEndLevel, setIsEndLevel] = React.useState<boolean>(false) 
 	const [mistakes, setMistakes] = React.useState<string[]>([])
+	const [сourseStage, setCourseStage] = React.useState<{level: number, sublevel:number}>({level: levelId, sublevel: sublevel})
+	const [textLength, setTextLength] = React.useState<number>(0)
+
+	if(!slug || !courseId) {
+		navigate('/courses')
+		return
+	}
 
 	return (
 		<div className={cl.MainContainer}>
 			{isEndLevel ? (
-				<FinalResults countOfMistakes = {mistakes.length}/>
+				<FinalResults countOfMistakes = {mistakes.length} textLength={textLength}/>
 			) : (
 				<>
 					<Timer />
-					<NavigateToLevels />
-					<SimulatorStr setIsEnd = {setIsEndLevel} setMistakes = {setMistakes}/>
+					<NavigateToLevels slug={slug} courseId = {courseId} title = {title}/>
+					<SimulatorStr setIsEnd = {setIsEndLevel} setMistakes = {setMistakes} сourseStage = {сourseStage} setTextLength={setTextLength}/>
 				</>
 			)}
 			<ProgressBar mc={isEndLevel ? 'mc' : undefined} endLevel = {isEndLevel ? true : false}/>
-			<UsefulIcons setMistakes = {!isEndLevel ? setMistakes : null}/>
-			{isEndLevel ? <NavigateToLevels mc='mc'/> : null}
-			<KeyBoardBlock mistakes = {isEndLevel ? mistakes : []}/>
+			{!isEndLevel ? <UsefulIcons setMistakes = {setMistakes} countSubLevels = {countSubLevels} sublevelOrder={сourseStage.sublevel}  setCourseStage={setCourseStage}/> : null}
+			{isEndLevel ? <NavigateToLevels mc='mc' slug={slug} courseId = {courseId} title = {title}/> : null}
+			<KeyBoardBlock mistakes = {isEndLevel ? mistakes : []} lang={lang}/>
 		</div>
 	)
 }
