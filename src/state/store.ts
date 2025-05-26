@@ -23,7 +23,6 @@ interface IStore {
 	simulatorLevel: simulatorLevel
 	endTime: string
 
-	getInitialLevel: () => void
 	clearLetter: (requiredLetter: string) => void
 	updateRequiredLetter: (requiredLetter: string) => void
 	updateWrongLetter: (requiredLetter: string, wrongLetter: string) => void
@@ -57,13 +56,6 @@ export const useStore = create<IStore>()(immer((set) => ({
 	},
 
 	endTime: '',
-
-	getInitialLevel: async () => {
-		const data = await server.getLevel(0, 1);
-		set((state) => {
-			state.simulatorLevel.simulatorStr = data
-		});
-	},
 
 	clearLetter: (requiredLetter) => set(state => {
 		state.simulatorInputInfo.requiredLetter = requiredLetter

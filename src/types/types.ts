@@ -78,6 +78,11 @@ export interface ICourseSubLevels {
 	order: number
 }
 
+export enum Lang{
+  russian = "russian",
+  english = "english"
+}
+
 export interface ICourseLevels {
 	id: number
 	level_block_id: number
@@ -85,6 +90,9 @@ export interface ICourseLevels {
 	type: 'lecture' | 'practice'
 	order: number
 	courseSubLevels: Array<ICourseSubLevels>
+	level_language: {
+		language: Lang
+	}
 }
 
 export interface ICourseModule {

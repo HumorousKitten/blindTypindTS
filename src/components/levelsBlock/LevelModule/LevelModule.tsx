@@ -7,13 +7,15 @@ interface ILevelModuleProps {
 	module: ICourseModule
 	openModal: (value: boolean) => void
 	setLevelId: (value: number) => void
+	slug: string
 }
 
-export const LevelModule: FC<ILevelModuleProps> = ({module, openModal, setLevelId}) => {
+export const LevelModule: FC<ILevelModuleProps> = ({module, openModal, setLevelId, slug}) => {
+
 	return (
 		<div className={cl.module}>
 			<h3>{module.title}</h3>
-			{module.courseLevels.length ? module.courseLevels.map(item => <LevelBlock courseLevel={item} key={item.id} openModal={openModal} setLevelId={setLevelId}/>) : null}
+			{module.courseLevels.length ? module.courseLevels.map(item => <LevelBlock courseLevel={item} key={item.id} openModal={openModal} setLevelId={setLevelId} courseId = {module.course_id} slug={slug}/>) : null}
 		</div>
 	);
 }

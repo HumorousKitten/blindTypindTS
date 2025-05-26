@@ -10,12 +10,9 @@ interface IFinalResults {
 	accuracy: number
 }
 
-// создам функции подсчета wpm, cpm, accuracy в родительском компоненте
-// потом при первом рендеринге компонента они передадутся в нужные дочерние компоненты. Там они отрисуются в useEffect
-//в компонент с accuracy передам отдельно функцию анимации, там сделаем так, что в состояние не сразу запишется результат, а сама анимация будет его записывать
-
 interface IFinalResultsProps {
 	countOfMistakes: number
+	textLength: number
 }
 
 interface IMutationFn {
@@ -26,53 +23,38 @@ interface IMutationFn {
 	accuracyLevel: number
 }
 
-async function updateFinalResults(
-	level: number,
-	sublevel: number,
-	cpm: number,
-	wpm: number,
-	accuracy: number
-) {
-	const token = server.readCookie('token')
-	if (!token) return
-	const data = await server.updateResultLevel(
-		level,
-		sublevel,
-		token,
-		cpm,
-		wpm,
-		accuracy
-	)
-	return data
-}
+// async function updateFinalResults(
+// 	level: number,
+// 	sublevel: number,
+// 	cpm: number,
+// 	wpm: number,
+// 	accuracy: number
+// ) {
+// 	const token = server.readCookie('token')
+// 	if (!token) return
+// 	const data = await server.updateResultLevel(
+// 		level,
+// 		sublevel,
+// 		token,
+// 		cpm,
+// 		wpm,
+// 		accuracy
+// 	)
+// 	return data
+// }
 
-export const FinalResults: FC<IFinalResultsProps> = ({ countOfMistakes }) => {
+export const FinalResults: FC<IFinalResultsProps> = ({ countOfMistakes, textLength }) => {
 	const endTime = useStore(state => state.endTime)
-	const { simulatorStr, level, subLevel } = useStore(state => state.simulatorLevel)
+	// const { simulatorStr, level, subLevel } = useStore(state => state.simulatorLevel)
 
-	const mutation = useMutation({
-		mutationFn: async ({
-			level,
-			subLevel,
-			charPerMin,
-			wordPerMin,
-			accuracyLevel,
-		}: IMutationFn) =>
-			updateFinalResults(level, subLevel, charPerMin, wordPerMin, accuracyLevel),
-
-		onSuccess: data => {
-			console.log(data)
-		},
-	})
-
-	React.useEffect(() => {
-		const charPerMin = cpm()
-		const wordPerMin = wpm()
-		const accuracyLevel = accuracy()
-		if (endTime && countOfMistakes <= 3) {
-			mutation.mutate({level, subLevel, charPerMin, wordPerMin, accuracyLevel})
-		}
-	}, [endTime])
+	// React.useEffect(() => {
+	// 	const charPerMin = cpm()
+	// 	const wordPerMin = wpm()
+	// 	const accuracyLevel = accuracy()
+	// 	// if (endTime && countOfMistakes <= 3) {
+	// 	// 	mutation.mutate({level, subLevel, charPerMin, wordPerMin, accuracyLevel})
+	// 	// }
+	// }, [endTime])
 
 	function convertTimeInMinutes(time: string) {
 		if (!time) return 0
@@ -85,17 +67,17 @@ export const FinalResults: FC<IFinalResultsProps> = ({ countOfMistakes }) => {
 	function cpm(): number {
 		const minutes = convertTimeInMinutes(endTime)
 		if (!minutes) return 0
-		return Math.round(simulatorStr.length / minutes)
+		return Math.round(textLength / minutes)
 	}
 
 	function wpm(): number {
 		const minutes = convertTimeInMinutes(endTime)
 		if (!minutes) return 0
-		return Math.round(simulatorStr.length / 5 / minutes)
+		return Math.round(textLength / 5 / minutes)
 	}
 
 	function accuracy(): number {
-		return ((simulatorStr.length - countOfMistakes) / simulatorStr.length) * 100
+		return ((textLength - countOfMistakes) / textLength) * 100
 	}
 
 	function animateFinalNumberResult(
@@ -104,7 +86,6 @@ export const FinalResults: FC<IFinalResultsProps> = ({ countOfMistakes }) => {
 	) {
 		let deleteAnimate: boolean = false
 		let startValue: number = 0
-		console.log(endValue)
 
 		const animateFunc = setInterval(() => {
 			if (startValue === endValue) {
@@ -113,7 +94,6 @@ export const FinalResults: FC<IFinalResultsProps> = ({ countOfMistakes }) => {
 			}
 			startValue++
 			callback(startValue)
-			console.log(startValue)
 		}, 50)
 
 		if (deleteAnimate) clearInterval(animateFunc)
@@ -177,7 +157,6 @@ const FinalResult: FC<IFinalResultProps> = ({
 
 		if (accuracy && endTime && animateFunc) {
 			const accuracyRes = accuracy()
-			console.log(accuracyRes)
 			animateFunc(Math.round(accuracyRes), setResult)
 		}
 	}, [endTime])

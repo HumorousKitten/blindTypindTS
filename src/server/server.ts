@@ -16,7 +16,7 @@ interface IServer {
 	subscribeOnCourse(course_id: number, token: string): Promise<boolean>
 	getCourseTasks(course_id: number, token: string): Promise<ICourseTasks>
 	getLevelInfo(level_id: number, token: string): Promise< ILevelInfo>
-	getSubLevel(id: number, token: string): Promise<ISubLevel>
+	getSubLevel(level_id: number, order:number, token: string): Promise<ISubLevel>
 	login(email: string, password: string): Promise<string>
 	registration(
 		login: string,
@@ -124,8 +124,8 @@ class Server implements IServer {
 		return await this.send<ILevelInfo>({token, path: 'course/level', level_id})
 	}
 
-	async getSubLevel(id: number, token: string): Promise<ISubLevel> {
-		return await this.send<ISubLevel>({token, path: 'course-content/sublevel', id})
+	async getSubLevel(level_id: number, order:number, token: string): Promise<ISubLevel> {
+		return await this.send<ISubLevel>({token, path: 'course-content/sublevel', level_id, order})
 	}
 
 	async login(email: string, password: string): Promise<string> {

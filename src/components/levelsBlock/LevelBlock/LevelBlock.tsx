@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ICourseLevels, ICourseSubLevels } from '../../../types/types'
+import { ICourseLevels, ICourseSubLevels, Lang } from '../../../types/types'
 import cl from './_LevellBlock.module.scss'
 import { Link } from 'react-router-dom'
 
@@ -7,14 +7,17 @@ interface ILevelBlock {
 	courseLevel: ICourseLevels
 	openModal: (value: boolean) => void
 	setLevelId: (value: number) => void
+	courseId: number
+	slug: string
 }
 
 export const LevelBlock: FC<ILevelBlock> = ({
 	courseLevel,
 	openModal,
 	setLevelId,
+	courseId,
+	slug
 }) => {
-
 	return (
 		<div
 			className={cl.lvlBlock}
@@ -37,6 +40,10 @@ export const LevelBlock: FC<ILevelBlock> = ({
 						key={item.id}
 						isFirst={!(item.order - 1)}
 						isLast={item.order === courseLevel.courseSubLevels.length}
+						courseId={courseId}
+						slug={slug}
+						lang={courseLevel.level_language.language}
+						countSubLevels = {courseLevel.courseSubLevels.length}
 					/>
 				))}
 			</div>
@@ -50,18 +57,22 @@ interface ISubLevels {
 	order: number
 	isFirst: boolean
 	isLast: boolean
+	courseId: number
+	slug: string
+	lang: Lang
+	countSubLevels: number
 }
 
 function slugify(title: string) {
 	return title.toLowerCase().replace(/[^a-zа-я0-9]+/gi, '-').replace(/^-+|-+$/g, '')
 }
 
-const SubLevels: FC<ISubLevels> = ({ subLevel, isFirst, isLast, title, order }) => {
+const SubLevels: FC<ISubLevels> = ({ subLevel, isFirst, isLast, title, order, courseId, slug, lang, countSubLevels }) => {
 
 	return (
 		<Link
 			to={`/course-content/${slugify(title)}/subTask/${order}.${subLevel.order}`}
-			state={{subLevelId: subLevel.id}}
+			state={{courseId, slug, title, lang, countSubLevels, levelId: subLevel.level_id, sublevel: subLevel.order}}
 			onClick={e => e.stopPropagation()}
 			className={cl.subLevel}
 		>

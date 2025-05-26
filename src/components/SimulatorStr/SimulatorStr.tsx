@@ -19,22 +19,24 @@ interface ISpanArr {
 interface ISimulatorStrProps {
 	setIsEnd: (value: boolean) => void
 	setMistakes: (mistakes: string[]) => void
+	сourseStage: {
+		level: number
+		sublevel: number
+	}
+	setTextLength: (value: number) => void
 }
 
-async function getContent(id: number) {
+async function getContent(id: number, order:number) {
 	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'
 	if (!token) return
 
-	return await server.getSubLevel(id, token)
+	return await server.getSubLevel(id, order, token)
 }
 
-export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes}) => {
-	const location = useLocation()
-	const subLevelId: number = location.state?.subLevelId
-	
+export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes,сourseStage, setTextLength}) => {
 	const {data, isLoading, error, isSuccess, isError} = useQuery({
-		queryKey: ['course-content', subLevelId],
-		queryFn: () => getContent(subLevelId)
+		queryKey: ['course-content', сourseStage.level, сourseStage.sublevel],
+		queryFn: () => getContent(сourseStage.level, сourseStage.sublevel)
 	})
 
 	const updateRequiredLetter = useStore(state => state.updateRequiredLetter)
@@ -44,27 +46,12 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes}) =>
 	const increaseProgressBar = useStore(state => state.increaseProgressBar)
 	const decreaseProgressBar = useStore(state => state.decreaseProgressBar)
 	const updateTimer = useStore(state => state.updateTimer)
-	const getInitialLevel = useStore(state => state.getInitialLevel)
-	const {simulatorStr} = useStore(state => state.simulatorLevel)
 
 	const [dividedSpanStr, updateDividedSpanStr] = useImmer<ISpanArr[]>([]) 
 
 	const simulatorText = React.useRef<HTMLParagraphElement>(null)
 	const index = React.useRef<number>(0)
 	const mistakes: string[] = []
-
-	// if(isSuccess) {
-	// 	if(index.current) index.current = 0
-	// 	updateRequiredLetter(simulatorStr.charAt(0))
-	// 	updateDividedSpanStr(addSpan())
-	// 	window.addEventListener('keydown', keyPressing)
-
-	// 	return () => {
-	// 		window.removeEventListener('keydown', keyPressing)
-	// 	}
-	// }
-
-	
 	
 	React.useEffect(() => {
 		if(!isSuccess || !data?.content) return
@@ -73,12 +60,13 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes}) =>
 		
 		updateRequiredLetter(data.content.charAt(0))
 		updateDividedSpanStr(addSpan(data.content))
+		setTextLength(data.content.length)
 		window.addEventListener('keydown', keyPressing)
 		
 		return () => {
 			window.removeEventListener('keydown', keyPressing)
 		}
-	}, [isSuccess, data?.content])
+	}, [data?.content, сourseStage])
 	
 	if (isError) return <p>Произошла ошибка при загрузке данных!</p>
 
@@ -147,11 +135,12 @@ export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes}) =>
 		clearLetter(data.content.charAt(index.current))
 		decreaseProgressBar(data.content.length)
 
+		index.current--;
 		updateDividedSpanStr(draft => {
 			draft[index.current].isWrong = false
 			draft[index.current].isRight = false 
 		})
-		index.current--;
+
 	}
 
 	return (
