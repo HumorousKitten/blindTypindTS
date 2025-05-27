@@ -1,14 +1,25 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { server } from '../../server/server';
+import { useQuery } from '@tanstack/react-query'
+import React from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
+import { server } from '../../server/server'
+import { useStore } from '../../state/store'
 
 const ProtectedRoutes = () => {
-	const token  = server.readCookie('token')
-	
-	if(!token){
-		return <Navigate to='/auth' replace/>
-	}
+	const updateUserRole = useStore(state => state.updateUserRole)
+	const { data } = useQuery({
+		queryKey: ['role'],
+		queryFn: () => server.getUserRole(),
+		staleTime: Infinity,
+		retry: false,
+	})
 
-	return <Outlet/>
+	React.useEffect(() => {
+		if(!data) return
+		updateUserRole(data.role)
+	}, [data?.role])
+
+	if (!data) return <Navigate to='/auth' replace />
+	return <Outlet />
 }
- 
-export default ProtectedRoutes;
+
+export default ProtectedRoutes

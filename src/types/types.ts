@@ -1,4 +1,16 @@
 
+export enum IUserRoles {
+	student = 'student',
+	moderator = 'moderator',
+	teacher = 'teacher',
+	admin = 'admin'
+}
+
+export interface IUserRole {
+	role: IUserRoles
+}
+
+
 export interface IFormInputs {
 	login: string
 	email: string
