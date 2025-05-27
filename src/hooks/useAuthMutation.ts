@@ -3,9 +3,13 @@ import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { server } from '../server/server'
 import { IFormInputs } from '../types/types'
+import { useQueryClient } from '@tanstack/react-query'
+import { useStore } from '../state/store'
 
 
 export const useAuthMutation = (isAuthPage: boolean) => {
+	// const queryClient = useQueryClient()
+	const updateIsAuth = useStore(state => state.updateIsAuth)
 	const navigate = useNavigate()
 	const [isSuccess, setSuccess] = React.useState<boolean | null>(null)
 
@@ -17,9 +21,13 @@ export const useAuthMutation = (isAuthPage: boolean) => {
 		onSuccess: data => {
 			setSuccess(!!data)
 			if (data) {
-				setTimeout(() => navigate('/'), 500)
+				updateIsAuth(true)
+				setTimeout(() => navigate('/courses'), 500)
 			}
 		},
+		onError: error => {
+			setSuccess(false)
+		}
 	})
 
 	return {mutation, isSuccess}

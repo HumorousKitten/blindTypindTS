@@ -82,8 +82,7 @@ export const Form = () => {
 			</div>
 			<Button
 				additionalClasses={{
-					wrongAuth: isSuccess === false,
-					background: 'blue'
+					background: isSuccess || isSuccess === null ? 'blue' : 'red'
 				}}
 				isLoading={mutation.isPending}
 			>

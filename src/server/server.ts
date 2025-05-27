@@ -1,4 +1,4 @@
-import { ICourseDetail, ILevelInfo, ICourses, ICourseTasks, ISubLevel} from '../types/types'
+import { ICourseDetail, ILevelInfo, ICourses, ICourseTasks, ISubLevel, IUserRole} from '../types/types'
 
 interface IParams {
 	path?: string
@@ -10,13 +10,14 @@ interface IParams {
 interface IServer {
 	send<T = unknown>(params: IParams): Promise<T>
 	postSend<T = unknown>(params: IParams): Promise<T>
-	getCourseDetail(course_id: number, token: string): Promise<ICourseDetail>
-	getCourses(page: number, token: string): Promise<ICourses>
-	checkSubscribeCourse(course_id: number, token: string): Promise<boolean>
-	subscribeOnCourse(course_id: number, token: string): Promise<boolean>
-	getCourseTasks(course_id: number, token: string): Promise<ICourseTasks>
-	getLevelInfo(level_id: number, token: string): Promise< ILevelInfo>
-	getSubLevel(level_id: number, order:number, token: string): Promise<ISubLevel>
+	getCourseDetail(course_id: number): Promise<ICourseDetail>
+	getCourses(page: number): Promise<ICourses>
+	checkSubscribeCourse(course_id: number): Promise<boolean>
+	subscribeOnCourse(course_id: number): Promise<boolean>
+	getCourseTasks(course_id: number): Promise<ICourseTasks>
+	getLevelInfo(level_id: number): Promise< ILevelInfo>
+	getSubLevel(level_id: number, order:number): Promise<ISubLevel>
+	getUserRole(): Promise<IUserRole>
 	login(email: string, password: string): Promise<string>
 	registration(
 		login: string,
@@ -24,21 +25,15 @@ interface IServer {
 		email: string,
 		role: string
 	): Promise<string>
-	readCookie(name: string): string | undefined
-	deleteCookie(name: string): void
 }
 
 class Server implements IServer {
 	async send<T = unknown>(params: IParams = {}): Promise<T> {
-		const { token, path, ...queryParams } = params
+		const {path, ...queryParams } = params
 
 		const headers: HeadersInit = {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-		}
-
-		if (token) {
-			headers.Authorization = `Bearer ${token}`
 		}
 
 		const query = Object.keys(queryParams)
@@ -49,6 +44,7 @@ class Server implements IServer {
 			const result = await fetch(`http://localhost:5000/${path}?${query}`, {
 				mode: 'cors',
 				method: 'GET',
+				credentials: 'include',
 				headers,
 			})
 			const answer = await result?.json()
@@ -67,14 +63,10 @@ class Server implements IServer {
 	}
 
 	async postSend<T = unknown>(params: IParams = {}): Promise<T> {
-		const { token, path, ...queryParams } = params
+		const {path, ...queryParams } = params
 		const headers: HeadersInit = {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-		}
-
-		if (token) {
-			headers.Authorization = `Bearer ${token}`
 		}
 
 		try {
@@ -82,6 +74,7 @@ class Server implements IServer {
 				mode: 'cors',
 				method: 'POST',
 				headers,
+				credentials: 'include',
 				body: JSON.stringify(queryParams),
 			})
 
@@ -100,39 +93,41 @@ class Server implements IServer {
 		}
 	}
 
-	async getCourseDetail(course_id: number, token: string): Promise<ICourseDetail> {
-		return await this.send<ICourseDetail>({ token, path: 'courses/course_details', course_id })
+	async getCourseDetail(course_id: number): Promise<ICourseDetail> {
+		return await this.send<ICourseDetail>({path: 'courses/course_details', course_id })
 	}
 
-	async getCourses(page: number, token: string): Promise<ICourses> {
-		return await this.send<ICourses>({ token, path: 'courses', page })
+	async getCourses(page: number): Promise<ICourses> {
+		return await this.send<ICourses>({path: 'courses', page })
 	}
 
-	async checkSubscribeCourse(course_id: number, token: string): Promise<boolean> {
-		return await this.send<boolean>({token, path: 'courses/subscribe', course_id})
+	async checkSubscribeCourse(course_id: number): Promise<boolean> {
+		return await this.send<boolean>({path: 'courses/subscribe', course_id})
 	}
 
-	async subscribeOnCourse(course_id: number, token: string): Promise<boolean> {
-		return await this.postSend<boolean>({token, path: 'courses/subscribe', course_id})
+	async subscribeOnCourse(course_id: number): Promise<boolean> {
+		return await this.postSend<boolean>({path: 'courses/subscribe', course_id})
 	}
 
-	async getCourseTasks(course_id: number, token: string): Promise<ICourseTasks> {
-		return await this.send<ICourseTasks>({token, path: 'course/modules', course_id})
+	async getCourseTasks(course_id: number): Promise<ICourseTasks> {
+		return await this.send<ICourseTasks>({path: 'course/modules', course_id})
 	}
 
-	async getLevelInfo(level_id: number, token: string): Promise<ILevelInfo> {
-		return await this.send<ILevelInfo>({token, path: 'course/level', level_id})
+	async getLevelInfo(level_id: number): Promise<ILevelInfo> {
+		return await this.send<ILevelInfo>({path: 'course/level', level_id})
 	}
 
-	async getSubLevel(level_id: number, order:number, token: string): Promise<ISubLevel> {
-		return await this.send<ISubLevel>({token, path: 'course-content/sublevel', level_id, order})
+	async getSubLevel(level_id: number, order:number): Promise<ISubLevel> {
+		return await this.send<ISubLevel>({path: 'course-content/sublevel', level_id, order})
+	}
+
+	async getUserRole(): Promise<IUserRole> {
+		return await this.send<IUserRole>({path: 'me/role'})
 	}
 
 	async login(email: string, password: string): Promise<string> {
 		const data = await this.postSend<string>({ path: 'auth/login', email, password })
-		if (data) {
-			document.cookie = `token=${data}; path=/; max-age=3600`
-		}
+
 		return data
 	}
 
@@ -149,10 +144,6 @@ class Server implements IServer {
 			email,
 			role,
 		})
-
-		if (data) {
-			document.cookie = `token=${data}; path=/; max-age=3600`
-		}
 
 		return data
 	}
@@ -199,22 +190,6 @@ class Server implements IServer {
 	// 	return await this.send({ method: 'getUserLevels', token })
 	// }
 
-	readCookie(name: string): string | undefined {
-		const matches = document.cookie.match(
-			new RegExp(
-				'(?:^|; )' +
-					name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
-					'=([^;]*)'
-			)
-		)
-		return matches ? decodeURIComponent(matches[1]) : undefined
-	}
-
-	deleteCookie(name: string) {
-		if (this.readCookie(name)) {
-			document.cookie = name + '=; Max-Age=-1;'
-		}
-	}
 }
 
 export const server = new Server()
