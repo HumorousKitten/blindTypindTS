@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "@tanstack/react-query": "^5.68.0",
     "@tanstack/react-query-devtools": "^5.68.0",
+    "clsx": "^2.1.1",
     "handy-svg": "^1.0.8",
     "hls.js": "^1.6.2",
     "localforage": "^1.10.0",

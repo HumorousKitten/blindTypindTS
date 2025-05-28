@@ -8,15 +8,19 @@ import next_courses from '../../../assets/img/icons/arrow_right.svg'
 import { useQuery } from '@tanstack/react-query'
 
 import { server } from '../../../server/server'
-
+import { useStore } from '../../../state/store'
+import Button from '../../../UI/button/Button'
 
 
 export const Courses = () => {
+	const user_role = useStore(state => state.user_role)
 	const [page, setPage] = React.useState<number>(1)
+
 	const { data, isLoading, error } = useQuery({
 		queryKey: ['courses', page],
 		queryFn: () => server.getCourses(page),
 	})
+
 
 	return (
 		<section className={cl.courses}>
@@ -44,6 +48,7 @@ export const Courses = () => {
 					</div>
 				) : null : null}
 			</div>
+			<Button additionalClasses={{background: "blue"}} className={cl.courses__addBtn}>Новый курс</Button>
 		</section>
 	)
 }

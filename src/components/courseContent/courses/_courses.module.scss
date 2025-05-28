@@ -32,6 +32,15 @@
 		align-items: center;
 		cursor: pointer;
 	}
+
+
+	&__addBtn {
+		border-radius: toRem(11);
+		color: $main-color;
+		padding: toRem(10) toRem(93);
+		font-weight: 700;
+		margin-top: toRem(30);
+	}
 }
 
 .prev__course {

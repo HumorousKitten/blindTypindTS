@@ -1,5 +1,9 @@
 import { FC, ReactNode } from 'react'
+import clsx from 'clsx'
+
 import cl from './_button.module.scss'
+
+
 
 interface IAdditionClasses {
 	wrongAuth?: boolean
@@ -14,7 +18,8 @@ interface IAdditionClasses {
 interface IButton {
 	children?: ReactNode
 	type?: 'button' | 'reset' | 'submit'
-	additionalClasses?: IAdditionClasses
+	additionalClasses: IAdditionClasses
+	className?: string
 	isLoading?: boolean
 	onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
@@ -23,24 +28,30 @@ const Button: FC<IButton> = ({
 	children,
 	type = 'submit',
 	additionalClasses,
+	className,
 	isLoading,
 	onClick,
 }) => {
+	const colorMap = {
+		blue: cl.backgroundColorBlue,
+		red: cl.wrongAuth,
+		transparent: cl.backgroundColorTransparent
+	}
+
+	const classes = clsx(
+		additionalClasses?.display && cl.displayBlock,
+		colorMap[additionalClasses.background],
+		additionalClasses?.margin && cl.mc,
+		additionalClasses?.closeBtn && cl.closeBtn,
+		additionalClasses?.modalPrimary && cl.modalPrimary,
+		additionalClasses?.border && cl.blueBorder,
+		className,
+	)
+
 	return (
 		<button
 			type={type}
-			className={`
-					${cl.button} 
-					${additionalClasses?.display ? cl.displayBlock : ''}
-					${
-						additionalClasses?.background === 'blue'
-							? cl.backgroundColorBlue : additionalClasses?.background === 'red' ? cl.wrongAuth : cl.backgroundColorTransparent
-					}
-					${additionalClasses?.margin === 'auto' ? cl.mc : ''}
-					${additionalClasses?.closeBtn ? cl.closeBtn : ''}
-					${additionalClasses?.modalPrimary ? cl.modalPrimary : ''}
-					${additionalClasses?.border ? cl.blueBorder : ''}
-				`}
+			className={classes}
 			onClick={onClick}
 		>
 			{isLoading ? 'Loading...' : children}
