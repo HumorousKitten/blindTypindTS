@@ -9,17 +9,6 @@ import time from '../../assets/img/icons/time.svg'
 import rating from '../../assets/img/icons/rating.svg'
 import Button from '../../UI/button/Button'
 
-function getCourseDetail(course_id: number) {
-	const token =
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'
-	return server.getCourseDetail(course_id, token)
-}
-
-function checkSubscribeCourse(course_id: number) {
-	const token =
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'
-	return server.checkSubscribeCourse(course_id, token)
-}
 
 export const CourseDetails = () => {
 	const navigate = useNavigate()
@@ -27,16 +16,16 @@ export const CourseDetails = () => {
 
 	const courseDetail = useQuery({
 		queryKey: ['courses/courseInfo', slug, id],
-		queryFn: () => getCourseDetail(+(id as string)),
+		queryFn: () => server.getCourseDetail(+(id as string)),
 	})
 
 	const checkSubscribe = useQuery({
 		queryKey: ['courses/subscribe', slug, id],
-		queryFn: () => checkSubscribeCourse(+(id as string))
+		queryFn: () => server.checkSubscribeCourse(+(id as string))
 	})
 
 	const mutation = useMutation({
-		mutationFn: ({course_id, token}: {course_id: number, token: string}) => server.subscribeOnCourse(course_id, token),
+		mutationFn: ({course_id}: {course_id: number}) => server.subscribeOnCourse(course_id),
 		onSuccess: () => {
 			navigate(`/level_page/${slug}/${id}`)
 		},
@@ -46,7 +35,7 @@ export const CourseDetails = () => {
 	})
 
 	function handleSubscribe() {
-		mutation.mutate({course_id: +(id as string), token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'})
+		mutation.mutate({course_id: +(id as string)})
 	}
 
 	return (

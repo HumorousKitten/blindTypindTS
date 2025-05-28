@@ -8,13 +8,6 @@ import { LevelModule } from './LevelModule/LevelModule'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FC } from 'react'
 
-async function getUserLevelQuery(course_id: number) {
-	// const token = server.readCookie('token')
-	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'
-	if (!token) return
-
-	return await server.getCourseTasks(course_id, token)
-}
 
 interface ILevelBlock {
 	openModal: (value: boolean) => void
@@ -26,10 +19,12 @@ export const LevelsBlock: FC<ILevelBlock> = ({openModal, setLevelId}) => {
 
 	const { data, isLoading } = useQuery({
 		queryKey: ['levels_page', slug, id],
-		queryFn: () => getUserLevelQuery(+(id as string)),
+		queryFn: () => server.getCourseTasks(+(id as string)),
 	})
 	const navigate = useNavigate()
 	
+	if(!slug || !id) return null
+
 	return (
 		<div className={cl.LevelsBlock}>
 			<div className={cl.titleBlock}>
