@@ -10,17 +10,12 @@ import { useQuery } from '@tanstack/react-query'
 import { server } from '../../../server/server'
 
 
-function getCourses(page: number) {
-	const token  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'
-
-	return server.getCourses(page, token)
-}
 
 export const Courses = () => {
 	const [page, setPage] = React.useState<number>(1)
 	const { data, isLoading, error } = useQuery({
 		queryKey: ['courses', page],
-		queryFn: () => getCourses(page),
+		queryFn: () => server.getCourses(page),
 	})
 
 	return (

@@ -26,17 +26,11 @@ interface ISimulatorStrProps {
 	setTextLength: (value: number) => void
 }
 
-async function getContent(id: number, order:number) {
-	const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc0NzIzMDQyMywiZXhwIjoxNzQ5ODIyNDIzfQ.JYqqbMS6TlDZPLHnSQE-wKHHYMZa8JiAh0cw91lX57k'
-	if (!token) return
-
-	return await server.getSubLevel(id, order, token)
-}
 
 export const SimulatorStr: FC<ISimulatorStrProps> = ({setIsEnd, setMistakes,сourseStage, setTextLength}) => {
 	const {data, isLoading, error, isSuccess, isError} = useQuery({
 		queryKey: ['course-content', сourseStage.level, сourseStage.sublevel],
-		queryFn: () => getContent(сourseStage.level, сourseStage.sublevel)
+		queryFn: () => server.getSubLevel(сourseStage.level, сourseStage.sublevel)
 	})
 
 	const updateRequiredLetter = useStore(state => state.updateRequiredLetter)
