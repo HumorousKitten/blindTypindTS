@@ -5,7 +5,7 @@
 	cursor: pointer;
 	background-color: $courses__background-color;
 	border-radius: toRem(11);
-
+	position: relative;
 	transition: transform 0.7s linear;
 
 	&:hover {
@@ -31,6 +31,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
+		max-height: toRem(46);
 	}
 
 	&__favorite {
@@ -90,8 +91,46 @@
 		color: $action-color;
 		padding: 0 26px 18px;
 	}
+
+	&__editBtn {
+		position: relative;
+		padding: 16px;
+	}
 }
 
 .adminCourse {
 	grid-row: span 2;
+}
+
+.backdropModal {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: $courses__background-color;
+	opacity: 0.90;
+	z-index: 100;
+	border-radius: 11px;
+}
+
+.statusModal {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	color: $main-color;
+	font-family: $font-family__DroidSans--bold;
+	line-height: 120%;
+	position: relative;
+
+	img {
+		margin-bottom: toRem(5);
+	}
+
+	&__editBtn {
+		position: absolute;
+		top: 1px;
+		right: 1px;
+		padding: 16px;
+	}
 }

@@ -7,6 +7,7 @@ import { CoursesPage } from '../pages/coursePage/CoursesPage'
 import { RegisterPage } from '../pages/Registration/RegistrationPage'
 import { LevelsPage } from '../pages/LevelsPage/LevelsPage'
 import { SimulatorPage } from '../pages/SimulatorPage/SimulatorPage'
+import { CreateCoursePage } from '../pages/createCoursePage/CreateCourse'
 
 export const router = createBrowserRouter([
 	{
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/course-content/:task_title/subTask/:subTaskId',
 				element: <SimulatorPage />
+			},
+			{
+				path: '/create_course',
+				element: <CreateCoursePage />
 			},
 		],
 	},

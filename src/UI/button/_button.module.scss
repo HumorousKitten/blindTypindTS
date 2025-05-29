@@ -3,12 +3,11 @@
 
 
 .closeBtn {
-	position: absolute;
-	right: 51px;
-	top: 41px;
+	// position: absolute;
+	// right: 51px;
+	// top: 41px;
 	width: 36px;
 	height: 36px;
-	border: none;
 	cursor: pointer;
 	border: none !important;
 	&::before,
@@ -19,7 +18,7 @@
 		left: 50%;
 		width: 18px;
 		height: 3px;
-		background-color: #ffffff;
+		// background-color: #ffffff;
 		transform-origin: center;
 	}
 
@@ -32,6 +31,32 @@
 	}
 
 	
+}
+
+.editBtn {
+	display: flex;
+	gap: 2px;
+	flex-direction: column;
+	width: 3px;
+	cursor: pointer;
+	
+	span {
+		display: inline-block;
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		background-color: $main-color;
+	}
+
+	&::before,
+  &::after {
+    content: '';
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: $main-color;
+    // left: 0;
+  }
 }
 
 .wrongAuth {
