@@ -1,9 +1,9 @@
 @use '../../scssVariables' as *;
 @use '../../utils/ScssUtils/toRem.scss' as *;
 
-button {
-	margin-left: toRem(5);
-}
+// button {
+// 	margin-left: toRem(5);
+// }
 
 .level {
 	color: rgba(255, 255, 255, 0.2);

@@ -1,0 +1,72 @@
+@use '../../scssVariables' as *;
+@use '../../utils/ScssUtils/toRem.scss' as *;
+
+.newCourse {
+	margin-top: toRem(160);
+	width: toRem(450);
+	margin-inline: auto;
+	font-family: $font-family__Inter;
+
+	&__title {
+		position: relative;
+		color: $main-color;
+		font-family: $font-family__Inter--bold;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: toRem(10);
+	}
+
+	&__closeBtn {
+		position: relative;
+		&::before,
+		&::after {
+			background-color: rgba(255, 255, 255, .5);
+		}
+	}
+
+	&__nameField__label {
+		position: relative;
+	}
+
+	&__nameField__label::before {
+		content: '';
+		position: absolute;
+		background: url('../../assets/img/icons/write_text-pen.svg');
+		width: 24px;
+		height: 24px;
+		top: 50%;
+		transform: translateY(-50%);
+		left: 10px;
+	}
+
+	&__nameField {
+		display: block;
+		width: calc(100% - toRem(10));
+		padding-left: 40px;		
+	}
+
+	&__hint {
+		color: $placeholder-color;
+		line-height: 140%;
+		font-family: $font-family__Inter;
+		font-size: toRem(14);
+		margin-top: toRem(16);
+		&__underline {
+			border-bottom: 1px solid $placeholder-color;
+		}
+	}
+
+	&__addBtn{
+		border-radius: 11px;
+		padding: toRem(10) toRem(85);
+		margin-top: toRem(58);
+		color: $main-color;
+		font-family: $font-family__Inter--bold;
+	}
+
+	&__errorMessage {
+		color: $errorMessage-color;
+		font-size: toRem(14);
+	}
+}

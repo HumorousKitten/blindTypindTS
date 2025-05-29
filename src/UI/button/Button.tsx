@@ -13,6 +13,7 @@ interface IAdditionClasses {
 	closeBtn?: boolean
 	modalPrimary?: boolean
 	border?: boolean
+	editBtn?: boolean
 }
 
 interface IButton {
@@ -43,6 +44,7 @@ const Button: FC<IButton> = ({
 		colorMap[additionalClasses.background],
 		additionalClasses?.margin && cl.mc,
 		additionalClasses?.closeBtn && cl.closeBtn,
+		additionalClasses?.editBtn && cl.editBtn,
 		additionalClasses?.modalPrimary && cl.modalPrimary,
 		additionalClasses?.border && cl.blueBorder,
 		className,

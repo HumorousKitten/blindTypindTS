@@ -75,6 +75,9 @@ export interface ICourse {
 	favorite: boolean
 	fromWhom: 'admin' | 'user'
 	stats: ICourseStats
+	reviewStatus: {
+		status: 'approved' | 'pending' | 'rejected'
+	}
 }
 
 export interface ICourses {
@@ -131,4 +134,8 @@ export interface ILevelInfo {
 
 export interface ISubLevel {
 	content: string
+}
+
+export interface IBoolQueryAnswer {
+	answer: boolean
 }

@@ -1,4 +1,4 @@
-import { ICourseDetail, ILevelInfo, ICourses, ICourseTasks, ISubLevel, IUserRole} from '../types/types'
+import { ICourseDetail, ILevelInfo, ICourses, ICourseTasks, ISubLevel, IUserRole, IBoolQueryAnswer} from '../types/types'
 
 interface IParams {
 	path?: string
@@ -18,6 +18,7 @@ interface IServer {
 	getLevelInfo(level_id: number): Promise< ILevelInfo>
 	getSubLevel(level_id: number, order:number): Promise<ISubLevel>
 	getUserRole(): Promise<IUserRole>
+	createCourse(title: string): Promise<IBoolQueryAnswer>
 	login(email: string, password: string): Promise<string>
 	registration(
 		login: string,
@@ -123,6 +124,10 @@ class Server implements IServer {
 
 	async getUserRole(): Promise<IUserRole> {
 		return await this.send<IUserRole>({path: 'me/role'})
+	}
+
+	async createCourse(title: string): Promise<IBoolQueryAnswer> {
+		return await this.postSend<IBoolQueryAnswer>({path: 'course/newCourse', title})
 	}
 
 	async login(email: string, password: string): Promise<string> {
